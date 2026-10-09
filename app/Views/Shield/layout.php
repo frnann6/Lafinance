@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title><?= esc($this->renderSection('title')) ?> | Lafinance</title>
+
+    <meta name="theme-color" content="#166534">
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --lafinance-green: #166534;
+            --lafinance-green-dark: #14532d;
+            --lafinance-bg: #f5f8f5;
+            --lafinance-text: #1f2937;
+            --lafinance-muted: #6b7280;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            min-height: 100dvh;
+            background: var(--lafinance-bg);
+            color: var(--lafinance-text);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                "Segoe UI", sans-serif;
+        }
+
+        .auth-shell {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100vh;
+            min-height: 100dvh;
+            margin: 0 auto;
+            padding: 32px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .brand-icon {
+            display: inline-flex;
+            width: 64px;
+            height: 64px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+            border-radius: 22px;
+            background: #dcfce7;
+            color: var(--lafinance-green);
+            font-size: 32px;
+        }
+
+        .brand-name {
+            margin: 0;
+            color: var(--lafinance-green);
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .brand-description {
+            margin: 8px 0 0;
+            color: var(--lafinance-muted);
+            font-size: 14px;
+        }
+
+        .auth-card {
+            padding: 26px 22px;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 24px;
+            box-shadow: 0 12px 35px rgba(20, 83, 45, 0.06);
+        }
+
+        .auth-card h2 {
+            margin-bottom: 8px;
+            font-size: 23px;
+            font-weight: 750;
+            letter-spacing: -0.5px;
+        }
+
+        .auth-card p {
+            color: var(--lafinance-muted);
+            font-size: 14px;
+        }
+
+        .form-label {
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            min-height: 48px;
+            border-color: #d1d5db;
+            border-radius: 12px;
+            font-size: 15px;
+        }
+
+        .form-control:focus {
+            border-color: var(--lafinance-green);
+            box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.12);
+        }
+
+        .btn-success {
+            min-height: 48px;
+            border-color: var(--lafinance-green);
+            border-radius: 12px;
+            background: var(--lafinance-green);
+            font-weight: 700;
+        }
+
+        .btn-success:hover,
+        .btn-success:focus {
+            border-color: var(--lafinance-green-dark);
+            background: var(--lafinance-green-dark);
+        }
+
+        .auth-footer {
+            margin-top: 24px;
+            color: var(--lafinance-muted);
+            font-size: 12px;
+            text-align: center;
+        }
+
+        a {
+            color: var(--lafinance-green);
+        }
+
+        @media (max-width: 360px) {
+            .auth-shell {
+                padding: 24px 16px;
+            }
+
+            .auth-card {
+                padding: 22px 18px;
+            }
+        }
+    </style>
+
+    <?= $this->renderSection('pageStyles') ?>
+</head>
+
+<body>
+    <main class="auth-shell">
+        <header class="brand">
+            <div class="brand-icon" aria-hidden="true">▣</div>
+            <h1 class="brand-name">Lafinance</h1>
+            <p class="brand-description">
+                Atur keuanganmu dengan lebih mudah
+            </p>
+        </header>
+
+        <section class="auth-card">
+            <?= $this->renderSection('main') ?>
+        </section>
+
+        <footer class="auth-footer">
+            Keuangan lebih teratur, hidup lebih tenang.
+        </footer>
+    </main>
+
+    <?= $this->renderSection('pageScripts') ?>
+</body>
+
+</html>
