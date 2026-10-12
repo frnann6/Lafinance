@@ -10,6 +10,8 @@ $nama = $user?->username ?? 'Pengguna';
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#166534">
+
+    <link rel="shortcut icon" href="<?= base_url('assets/img/logos/lafern-circle.png') ?>" type="image/x-icon">
     <title>Dashboard | Lafinance</title>
 
     <link

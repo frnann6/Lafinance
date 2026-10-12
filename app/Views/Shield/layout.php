@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="shortcut icon" href="<?= base_url('assets/img/logos/lafern-circle.png') ?>" type="image/x-icon">
     <title><?= esc($this->renderSection('title')) ?> | Lafinance</title>
 
     <meta name="theme-color" content="#166534">
@@ -160,7 +161,8 @@
 <body>
     <main class="auth-shell">
         <header class="brand">
-            <div class="brand-icon" aria-hidden="true">▣</div>
+            <!-- <div class="brand-icon" aria-hidden="true">▣</div> -->
+            <div aria-hidden="true"><img class="my-2 rounded-circle" width="55" height="55" src="<?= base_url('assets/img/logos/lafern.png') ?>"></div>
             <h1 class="brand-name">Lafinance</h1>
             <p class="brand-description">
                 Atur keuanganmu dengan lebih mudah

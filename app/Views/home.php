@@ -5,7 +5,10 @@
             <h1>Lafinance<span>.</span></h1>
         </div>
 
-        <div class="brand-icon" aria-hidden="true">D</div>
+        <!-- <div class="brand-icon" aria-hidden="true">D</div> -->
+        <div aria-hidden="true">
+            <img class="rounded-circle" src="<?= base_url('assets/img/logos/lafern.png') ?>" width="50" height="50">
+        </div>
     </header>
 
     <section class="welcome-card">
