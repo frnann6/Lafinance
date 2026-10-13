@@ -141,10 +141,11 @@
             </div>
         <?php endif; ?>
 
-        <a href="<?= site_url('transactions/create') ?>"
-            class="btn btn-add w-100 mt-4">
+        <button type="button" class="btn btn-add w-100 mt-4"
+            data-bs-toggle="modal"
+            data-bs-target="#transactionModal">
             + Tambah Transaksi
-        </a>
+        </button>
 
         <?php if (empty($transactions)): ?>
 
@@ -197,10 +198,150 @@
 
         <?php endif; ?>
 
+        <!-- Modal Tambah Transaksi -->
+        <div class="modal fade" id="transactionModal"
+            tabindex="-1" aria-labelledby="transactionModalLabel"
+            aria-hidden="true">
+
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content border-0 rounded-4">
+
+                    <div class="modal-header border-0 pb-0">
+                        <div>
+                            <h2 class="modal-title fs-5 fw-bold"
+                                id="transactionModalLabel">
+                                Tambah Transaksi
+                            </h2>
+                            <p class="text-secondary small mb-0">
+                                Catat pemasukan atau pengeluaranmu.
+                            </p>
+                        </div>
+
+                        <button type="button" class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Tutup"></button>
+                    </div>
+
+                    <div class="modal-body pt-3">
+
+                        <?php if (session('errors')): ?>
+                            <div class="alert alert-danger rounded-3">
+                                <?php foreach (session('errors') as $error): ?>
+                                    <div><?= esc($error) ?></div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <form action="<?= site_url('transactions/store') ?>"
+                            method="post">
+
+                            <?= csrf_field() ?>
+
+                            <div class="mb-3">
+                                <label for="type" class="form-label fw-semibold">
+                                    Jenis transaksi
+                                </label>
+
+                                <select name="type" id="type"
+                                    class="form-select rounded-3 py-2" required>
+                                    <option value="income"
+                                        <?= old('type', 'income') === 'income' ? 'selected' : '' ?>>
+                                        Pemasukan
+                                    </option>
+                                    <option value="expense"
+                                        <?= old('type') === 'expense' ? 'selected' : '' ?>>
+                                        Pengeluaran
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="category" class="form-label fw-semibold">
+                                    Kategori
+                                </label>
+
+                                <input type="text" name="category" id="category"
+                                    class="form-control rounded-3 py-2"
+                                    maxlength="100"
+                                    placeholder="Contoh: Gaji, Makanan"
+                                    value="<?= esc(old('category') ?? '') ?>"
+                                    required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="amount" class="form-label fw-semibold">
+                                    Nominal (Rp)
+                                </label>
+
+                                <input type="number" name="amount" id="amount"
+                                    class="form-control rounded-3 py-2"
+                                    min="0.01" step="0.01"
+                                    inputmode="decimal"
+                                    placeholder="Contoh: 50000"
+                                    value="<?= esc(old('amount') ?? '') ?>"
+                                    required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="transaction_date"
+                                    class="form-label fw-semibold">
+                                    Tanggal
+                                </label>
+
+                                <input type="date" name="transaction_date"
+                                    id="transaction_date"
+                                    class="form-control rounded-3 py-2"
+                                    value="<?= esc(old('transaction_date') ?? date('Y-m-d')) ?>"
+                                    required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="description"
+                                    class="form-label fw-semibold">
+                                    Catatan
+                                    <span class="text-secondary fw-normal">
+                                        (opsional)
+                                    </span>
+                                </label>
+
+                                <textarea name="description" id="description"
+                                    class="form-control rounded-3"
+                                    rows="3"
+                                    placeholder="Tambahkan catatan jika perlu"><?= esc(old('description') ?? '') ?></textarea>
+                            </div>
+
+                            <button type="submit"
+                                class="btn btn-add w-100 py-3">
+                                Simpan Transaksi
+                            </button>
+
+                            <button type="button"
+                                class="btn btn-light w-100 mt-2 rounded-3 py-2"
+                                data-bs-dismiss="modal">
+                                Batal
+                            </button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <?= $this->include('partials/navbar', ['activeMenu' => 'home']) ?>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <?php if (session('errors')): ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modalElement = document.getElementById('transactionModal');
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
+    });
+</script>
+<?php endif; ?>
 </body>
 
 </html>

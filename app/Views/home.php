@@ -21,8 +21,10 @@
             dan bangun kebiasaan keuangan yang lebih baik.
         </p>
 
-        <button class="btn btn-duitku w-100" type="button" disabled>
-            Mulai perjalananmu
+        <button class="btn btn-duitku w-100" type="button">
+            <a href="<?= site_url('dashboard') ?>" class="text-decoration-none text-dark">
+                Mulai perjalananmu
+            </a>
         </button>
 
         <p class="coming-soon">
