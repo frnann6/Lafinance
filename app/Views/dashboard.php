@@ -149,7 +149,10 @@ $nama = $user?->username ?? 'Pengguna';
 
     <main class="app-container">
 
-        <header class="brand">Lafinance</header>
+        <div class="d-flex align-items-center gap-2">
+            <img src="<?= base_url('assets/img/logos/lafern-circle.png') ?>" width="35px" height="auto" alt="">
+            <header class="brand">Lafinance</header>
+        </div>
 
         <section>
             <p class="muted mb-1 mt-4">Ringkasan keuanganmu</p>
