@@ -144,6 +144,108 @@
                 transform: translate(-50%, 0);
             }
         }
+
+        /* MODAL */
+
+
+        /* Modal tambah transaksi: mobile-first */
+        #transactionModal .modal-dialog {
+            width: auto;
+            max-width: 480px;
+            margin: 12px auto;
+        }
+
+        #transactionModal .modal-content {
+            border-radius: 24px !important;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        #transactionModal .modal-header {
+            padding: 22px 20px 0;
+        }
+
+        #transactionModal .modal-body {
+            padding: 20px;
+        }
+
+        #transactionModal .modal-title {
+            font-size: 1.2rem !important;
+            letter-spacing: -0.3px;
+        }
+
+        #transactionModal .form-label {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: #26352c;
+        }
+
+        #transactionModal .form-control,
+        #transactionModal .form-select {
+            min-height: 48px;
+            border: 1px solid #dfe7e1;
+            background-color: #fbfdfb;
+            font-size: 16px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        #transactionModal textarea.form-control {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        #transactionModal .form-control:focus,
+        #transactionModal .form-select:focus {
+            border-color: #279764;
+            box-shadow: 0 0 0 3px rgba(39, 151, 100, 0.12);
+            background-color: #fff;
+        }
+
+        #transactionModal #amount {
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        #transactionModal .btn-add {
+            min-height: 50px;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        #transactionModal .btn-light {
+            min-height: 46px;
+            border: 1px solid #e6ebe7;
+            border-radius: 12px !important;
+        }
+
+        @media (max-width: 576px) {
+            #transactionModal .modal-dialog {
+                max-width: none;
+                margin: 10px;
+                min-height: calc(100% - 20px);
+            }
+
+            #transactionModal .modal-content {
+                border-radius: 22px !important;
+            }
+
+            #transactionModal .modal-header {
+                padding: 20px 18px 0;
+            }
+
+            #transactionModal .modal-body {
+                padding: 18px;
+            }
+
+            #transactionModal .mb-3 {
+                margin-bottom: 18px !important;
+            }
+
+            #transactionModal .modal-body form>.mb-4 {
+                margin-bottom: 20px !important;
+            }
+        }
     </style>
 </head>
 
