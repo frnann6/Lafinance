@@ -258,17 +258,64 @@
                                 </select>
                             </div>
 
+                            <?php
+                            $jenisLama = old('type', 'income');
+                            $kategoriLama = old('category', '');
+                            $kategoriBawaan = [
+                                'income' => [
+                                    'Gaji',
+                                    'Bisnis',
+                                    'Freelance',
+                                    'Investasi',
+                                    'Bonus',
+                                ],
+                                'expense' => [
+                                    'Makanan',
+                                    'Transportasi',
+                                    'Belanja',
+                                    'Tagihan',
+                                    'Pendidikan',
+                                    'Kesehatan',
+                                    'Hiburan',
+                                ],
+                            ];
+
+                            $kategoriKhusus = $kategoriLama !== ''
+                                && ! in_array($kategoriLama, array_merge(
+                                    $kategoriBawaan['income'],
+                                    $kategoriBawaan['expense']
+                                ), true);
+                            ?>
+
                             <div class="mb-3">
                                 <label for="category" class="form-label fw-semibold">
                                     Kategori
                                 </label>
 
-                                <input type="text" name="category" id="category"
-                                    class="form-control rounded-3 py-2"
+                                <select id="category_select"
+                                    class="form-select rounded-3 py-2">
+                                    <option value="">Pilih kategori</option>
+                                    <?php foreach ($kategoriBawaan[$jenisLama] as $kategori): ?>
+                                        <option value="<?= esc($kategori) ?>"
+                                            <?= $kategoriLama === $kategori ? 'selected' : '' ?>>
+                                            <?= esc($kategori) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                    <option value="__custom__"
+                                        <?= $kategoriKhusus ? 'selected' : '' ?>>
+                                        Lainnya
+                                    </option>
+                                </select>
+
+                                <input type="hidden" name="category" id="category"
+                                    value="<?= $kategoriKhusus ? '' : esc($kategoriLama) ?>">
+
+                                <input type="text" id="custom_category"
+                                    class="form-control rounded-3 mt-2 <?= $kategoriKhusus ? '' : 'd-none' ?>"
                                     maxlength="100"
-                                    placeholder="Contoh: Gaji, Makanan"
-                                    value="<?= esc(old('category') ?? '') ?>"
-                                    required>
+                                    placeholder="Kategori lainnya.."
+                                    value="<?= $kategoriKhusus ? esc($kategoriLama) : '' ?>"
+                                    <?= $kategoriKhusus ? 'required' : '' ?>>
                             </div>
 
                             <div class="mb-3">
@@ -345,6 +392,92 @@
             });
         </script>
     <?php endif; ?>
+
+    ```html
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const typeSelect = document.getElementById('type');
+            const categorySelect = document.getElementById('category_select');
+            const categoryInput = document.getElementById('category');
+            const customInput = document.getElementById('custom_category');
+
+            const categories = {
+                income: [
+                    'Gaji',
+                    'Bisnis',
+                    'Freelance',
+                    'Investasi',
+                    'Bonus'
+                ],
+                expense: [
+                    'Makanan',
+                    'Transportasi',
+                    'Belanja',
+                    'Tagihan',
+                    'Pendidikan',
+                    'Kesehatan',
+                    'Hiburan'
+                ]
+            };
+
+            function updateCategories() {
+                const previousValue = categorySelect.value;
+
+                categorySelect.innerHTML = '<option value="">Pilih kategori</option>';
+
+                (categories[typeSelect.value] || []).forEach(function(category) {
+                    const option = document.createElement('option');
+                    option.value = category;
+                    option.textContent = category;
+                    categorySelect.appendChild(option);
+                });
+
+                const customOption = document.createElement('option');
+                customOption.value = '__custom__';
+                customOption.textContent = 'Lainnya';
+                categorySelect.appendChild(customOption);
+
+                if ([...categorySelect.options].some(option => option.value === previousValue)) {
+                    categorySelect.value = previousValue;
+                }
+
+                syncCategory();
+            }
+
+            function syncCategory() {
+                const isCustom = categorySelect.value === '__custom__';
+
+                customInput.classList.toggle('d-none', !isCustom);
+                customInput.required = isCustom;
+
+                if (isCustom) {
+                    categoryInput.value = customInput.value.trim();
+                } else {
+                    categoryInput.value = categorySelect.value;
+                    customInput.value = '';
+                }
+            }
+
+            typeSelect.addEventListener('change', function() {
+                categorySelect.value = '';
+                customInput.value = '';
+                updateCategories();
+            });
+
+            categorySelect.addEventListener('change', syncCategory);
+
+            customInput.addEventListener('input', function() {
+                categoryInput.value = customInput.value.trim();
+            });
+
+            updateCategories();
+
+            if (categorySelect.value === '__custom__') {
+                customInput.focus();
+            }
+        });
+    </script>
+    ```
 </body>
 
 </html>
