@@ -120,6 +120,30 @@
             margin-bottom: 4px;
             font-size: 19px;
         }
+
+        /* ALERT */
+
+        .toast-alert {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            z-index: 2000;
+            width: min(92vw, 420px);
+            transform: translateX(-50%);
+            animation: toastIn 0.35s ease-out;
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
     </style>
 </head>
 
@@ -130,6 +154,22 @@
             <img src="<?= base_url('assets/img/logos/lafern-circle.png') ?>" width="35px" height="auto" alt="">
             <header class="brand">Lafinance</header>
         </div>
+
+
+        <?php if (session()->getFlashdata('error')): ?>
+            <div class="alert alert-danger alert-dismissible fade show mt-3 toast-alert" role="alert">
+                <?= esc(session()->getFlashdata('error')) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+            </div>
+        <?php endif; ?>
+
+        <?php if (session()->getFlashdata('message')): ?>
+            <div class="alert alert-success alert-dismissible fade show mt-3 toast-alert" role="alert">
+                <?= esc(session()->getFlashdata('message')) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+            </div>
+        <?php endif; ?>
+
 
         <section>
             <h1 class="page-title">Transaksi</h1>
