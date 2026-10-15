@@ -168,7 +168,9 @@ $nama = $user?->username ?? 'Pengguna';
 
         <section class="balance-card">
             <p class="balance-label mb-0">Total Saldo</p>
-            <p class="balance-value">Rp0</p>
+            <p class="balance-value">
+                Rp<?= number_format($totalSaldo, 0, ',', '.') ?>
+            </p>
             <p class="balance-label mb-0">
                 Ringkasan saldo akan tersedia setelah transaksi dicatat.
             </p>
@@ -179,7 +181,9 @@ $nama = $user?->username ?? 'Pengguna';
                 <div class="summary-card">
                     <div class="text-success fs-4">↗</div>
                     <div class="summary-label">Pemasukan</div>
-                    <div class="summary-value">Rp0</div>
+                    <div class="summary-value">
+                        Rp<?= number_format($totalPemasukan, 0, ',', '.') ?>
+                    </div>
                 </div>
             </div>
 
@@ -187,7 +191,9 @@ $nama = $user?->username ?? 'Pengguna';
                 <div class="summary-card">
                     <div class="text-danger fs-4">↘</div>
                     <div class="summary-label">Pengeluaran</div>
-                    <div class="summary-value">Rp0</div>
+                    <div class="summary-value">
+                        Rp<?= number_format($totalPengeluaran, 0, ',', '.') ?>
+                    </div>
                 </div>
             </div>
         </section>
@@ -232,7 +238,7 @@ $nama = $user?->username ?? 'Pengguna';
                                 <?php endif; ?>
                             </div>
 
-                            <div class="amount fw-bold text-success <?= $transaction['type'] === 'income' ? 'income' : 'expense' ?>">
+                            <div class="amount fw-bold <?= $transaction['type'] === 'income' ? 'text-success' : 'text-danger' ?>">
                                 <?= $transaction['type'] === 'income' ? '+' : '−' ?>
                                 Rp<?= esc(number_format(
                                         (float) $transaction['amount'],
