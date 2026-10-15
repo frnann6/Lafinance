@@ -13,6 +13,10 @@
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet">
 
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
     <style>
         :root {
             --lafinance-green: #166534;
@@ -201,10 +205,10 @@
             background-color: #fff;
         }
 
-        #transactionModal #amount {
+        /* #transactionModal #amount {
             font-size: 1.15rem;
             font-weight: 600;
-        }
+        } */
 
         #transactionModal .btn-add {
             min-height: 50px;
@@ -245,6 +249,72 @@
             #transactionModal .modal-body form>.mb-4 {
                 margin-bottom: 20px !important;
             }
+        }
+
+
+        /* Pilihan jenis transaksi */
+        #transactionModal .transaction-type-picker {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        #transactionModal .transaction-type-option {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 64px;
+            padding: 12px;
+            border: 1.5px solid #dfe7e1;
+            border-radius: 16px;
+            background: #fbfdfb;
+            color: #526157;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        #transactionModal .transaction-type-option .type-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            border-radius: 11px;
+            background: #edf1ee;
+            font-size: 1.2rem;
+        }
+
+        #transactionModal .transaction-type-option.active[data-type="income"] {
+            color: #167344;
+            background: #eaf8ef;
+            border-color: #279764;
+        }
+
+        #transactionModal .transaction-type-option.active[data-type="income"] .type-icon {
+            background: #d4f0df;
+        }
+
+        #transactionModal .transaction-type-option.active[data-type="expense"] {
+            color: #b42332;
+            background: #fff0f0;
+            border-color: #dc5864;
+        }
+
+        #transactionModal .transaction-type-option.active[data-type="expense"] .type-icon {
+            background: #ffdddd;
+        }
+
+        #transactionModal .transaction-type-option:focus-visible {
+            outline: 3px solid rgba(39, 151, 100, 0.25);
+            outline-offset: 2px;
+        }
+
+        #transactionModal .transaction-type-option:active {
+            transform: scale(0.98);
         }
     </style>
 </head>
@@ -382,23 +452,36 @@
 
                             <?= csrf_field() ?>
 
+
                             <div class="mb-3">
-                                <label for="type" class="form-label fw-semibold">
+                                <label class="form-label fw-semibold">
                                     Jenis transaksi
                                 </label>
 
-                                <select name="type" id="type"
-                                    class="form-select rounded-3 py-2" required>
-                                    <option value="income"
-                                        <?= old('type', 'income') === 'income' ? 'selected' : '' ?>>
-                                        Pemasukan
-                                    </option>
-                                    <option value="expense"
-                                        <?= old('type') === 'expense' ? 'selected' : '' ?>>
-                                        Pengeluaran
-                                    </option>
-                                </select>
+                                <input type="hidden" name="type" id="type"
+                                    value="<?= esc(old('type', 'income')) ?>">
+
+                                <div class="transaction-type-picker">
+                                    <button type="button"
+                                        class="transaction-type-option"
+                                        data-type="income">
+                                        <span class="type-icon">
+                                            <i class="bi bi-arrow-up-right"></i>
+                                        </span>
+                                        <span>Pemasukan</span>
+                                    </button>
+
+                                    <button type="button"
+                                        class="transaction-type-option"
+                                        data-type="expense">
+                                        <span class="type-icon">
+                                            <i class="bi bi-arrow-down-right"></i>
+                                        </span>
+                                        <span>Pengeluaran</span>
+                                    </button>
+                                </div>
                             </div>
+
 
                             <?php
                             $jenisLama = old('type', 'income');
@@ -535,10 +618,13 @@
         </script>
     <?php endif; ?>
 
-    ```html
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const typeSelect = document.getElementById('type');
+            const typeButtons = document.querySelectorAll(
+                '#transactionModal .transaction-type-option'
+            );
             const categorySelect = document.getElementById('category_select');
             const categoryInput = document.getElementById('category');
             const customInput = document.getElementById('custom_category');
@@ -562,10 +648,18 @@
                 ]
             };
 
-            function updateCategories() {
-                const previousValue = categorySelect.value;
+            function updateTypeButtons() {
+                typeButtons.forEach(function(button) {
+                    const active = button.dataset.type === typeSelect.value;
 
-                categorySelect.innerHTML = '<option value="">Pilih kategori</option>';
+                    button.classList.toggle('active', active);
+                    button.setAttribute('aria-pressed', active ? 'true' : 'false');
+                });
+            }
+
+            function updateCategories() {
+                categorySelect.innerHTML =
+                    '<option value="">Pilih kategori</option>';
 
                 (categories[typeSelect.value] || []).forEach(function(category) {
                     const option = document.createElement('option');
@@ -579,10 +673,8 @@
                 customOption.textContent = 'Lainnya';
                 categorySelect.appendChild(customOption);
 
-                if ([...categorySelect.options].some(option => option.value === previousValue)) {
-                    categorySelect.value = previousValue;
-                }
-
+                categorySelect.value = '';
+                customInput.value = '';
                 syncCategory();
             }
 
@@ -600,10 +692,18 @@
                 }
             }
 
-            typeSelect.addEventListener('change', function() {
-                categorySelect.value = '';
-                customInput.value = '';
-                updateCategories();
+            typeButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const newType = button.dataset.type;
+
+                    if (typeSelect.value === newType) {
+                        return;
+                    }
+
+                    typeSelect.value = newType;
+                    updateTypeButtons();
+                    updateCategories();
+                });
             });
 
             categorySelect.addEventListener('change', syncCategory);
@@ -612,6 +712,7 @@
                 categoryInput.value = customInput.value.trim();
             });
 
+            updateTypeButtons();
             updateCategories();
 
             if (categorySelect.value === '__custom__') {
@@ -619,6 +720,7 @@
             }
         });
     </script>
+
     ```
 </body>
 
