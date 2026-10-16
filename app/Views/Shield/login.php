@@ -60,7 +60,7 @@
             required>
     </div>
 
-    <?php if (setting('Auth.sessionConfig')['allowRemembering']) : ?>
+    <!-- <?php if (setting('Auth.sessionConfig')['allowRemembering']) : ?>
         <div class="form-check mb-3">
             <input
                 type="checkbox"
@@ -73,7 +73,7 @@
                 <?= lang('Auth.rememberMe') ?>
             </label>
         </div>
-    <?php endif ?>
+    <?php endif ?> -->
 
     <button type="submit" class="btn btn-success w-100 mt-2">
         Masuk
