@@ -93,6 +93,12 @@
             color: #fff;
         }
 
+        .btn.btn-add:active,
+        .btn.btn-add:focus {
+            background-color: #14532d;
+            color: #fff;
+        }
+
         .bottom-nav {
             position: fixed;
             right: 0;
@@ -356,7 +362,7 @@
             </div>
         <?php endif; ?>
 
-        <button type="button" class="btn btn-add w-100 mt-4"
+        <button type="button" class="btn btn-add w-100 mt-4 btn-tambah-transaksi"
             data-bs-toggle="modal"
             data-bs-target="#transactionModal">
             + Tambah Transaksi
@@ -467,6 +473,7 @@
                                         data-type="income">
                                         <span class="type-icon">
                                             <i class="bi bi-arrow-up-right"></i>
+                                            <!-- <i class="bi bi-graph-up-arrow"></i> -->
                                         </span>
                                         <span>Pemasukan</span>
                                     </button>
@@ -476,6 +483,7 @@
                                         data-type="expense">
                                         <span class="type-icon">
                                             <i class="bi bi-arrow-down-right"></i>
+                                            <!-- <i class="bi bi-graph-down-arrow"></i> -->
                                         </span>
                                         <span>Pengeluaran</span>
                                     </button>

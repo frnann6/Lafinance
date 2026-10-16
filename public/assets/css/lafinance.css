@@ -86,7 +86,7 @@ body {
     padding: 25px 21px;
     border-radius: 24px;
     color: #fff;
-    background: linear-gradient(145deg, #115e59, #0f766e);
+    background: #14532d;
 }
 
 .welcome-label {
@@ -121,6 +121,15 @@ body {
     background: #fff;
     color: var(--duitku-primary-dark);
     opacity: 0.85;
+}
+
+.btn-duitku:hover {
+    background-color: white;
+}
+
+.btn.btn-duitku:active {
+    background-color: rgba(255, 255, 255, 0.839) !important;
+    color: var(--duitku-primary-dark);
 }
 
 .coming-soon {
