@@ -1,3 +1,16 @@
+<?php
+$currentSegment = service('uri')->getSegment(1);
+
+$activeMenu = match ($currentSegment) {
+    'dashboard'    => 'home',
+    'transactions' => 'transactions',
+    'profile'      => 'profile',
+    default        => $activeMenu ?? '',
+};
+?>
+
+<link rel="stylesheet" href="<?= base_url('assets/css/navbar.css') ?>">
+
 <nav class="bottom-nav">
     <div class="d-flex justify-content-around w-100">
         <a

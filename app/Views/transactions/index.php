@@ -99,38 +99,6 @@
             color: #fff;
         }
 
-        .bottom-nav {
-            position: fixed;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 10;
-            max-width: 430px;
-            margin: 0 auto;
-            padding: 14px 10px calc(14px + env(safe-area-inset-bottom));
-            background: #fff;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .nav-item {
-            flex: 1;
-            color: #6b7280;
-            font-size: 12px;
-            text-align: center;
-            text-decoration: none;
-        }
-
-        .nav-item.active {
-            color: var(--lafinance-green);
-            font-weight: 700;
-        }
-
-        .nav-icon {
-            display: block;
-            margin-bottom: 4px;
-            font-size: 19px;
-        }
-
         /* ALERT */
 
         .toast-alert {
@@ -621,7 +589,7 @@
 
     </main>
 
-    <?= $this->include('partials/navbar', ['activeMenu' => 'home']) ?>
+    <?= $this->include('partials/navbar', ['activeMenu' => 'transactions']) ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -753,7 +721,6 @@
         });
     </script>
 
-    ```
 </body>
 
 </html>
