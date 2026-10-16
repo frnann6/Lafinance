@@ -356,12 +356,6 @@
             </p>
         </section>
 
-        <?php if (session()->getFlashdata('message')): ?>
-            <div class="alert alert-success rounded-3 mt-3">
-                <?= esc(session()->getFlashdata('message')) ?>
-            </div>
-        <?php endif; ?>
-
         <button type="button" class="btn btn-add w-100 mt-4 btn-tambah-transaksi"
             data-bs-toggle="modal"
             data-bs-target="#transactionModal">
