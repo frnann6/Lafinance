@@ -551,19 +551,34 @@
                                     <?= $kategoriKhusus ? 'required' : '' ?>>
                             </div>
 
+
                             <div class="mb-3">
-                                <label for="amount" class="form-label fw-semibold">
-                                    Nominal (Rp)
+                                <label for="amount_display" class="form-label fw-semibold">
+                                    Nominal transaksi
                                 </label>
 
-                                <input type="number" name="amount" id="amount"
-                                    class="form-control rounded-3 py-2"
-                                    min="0.01" step="0.01"
-                                    inputmode="decimal"
-                                    placeholder="Contoh: 50000"
-                                    value="<?= esc(old('amount') ?? '') ?>"
-                                    required>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text bg-light fw-semibold" style="font-size: 15px;">Rp</span>
+                                    <input type="text"
+                                        id="amount_display"
+                                        class="form-control rounded-end-3"
+                                        inputmode="numeric"
+                                        autocomplete="off"
+                                        placeholder="0"
+                                        value="<?= esc(old('amount') !== null && old('amount') !== '' ? number_format((float) old('amount'), 0, ',', '.') : '') ?>"
+                                        required>
+                                </div>
+
+                                <input type="hidden"
+                                    name="amount"
+                                    id="amount"
+                                    value="<?= esc(old('amount') ?? '') ?>">
+
+                                <small class="text-secondary d-block mt-2">
+                                    Masukkan nominal dalam Rupiah.
+                                </small>
                             </div>
+
 
                             <div class="mb-3">
                                 <label for="transaction_date"
@@ -726,6 +741,21 @@
             if (categorySelect.value === '__custom__') {
                 customInput.focus();
             }
+
+
+            const amountDisplay = document.getElementById('amount_display');
+            const amountInput = document.getElementById('amount');
+
+            amountDisplay.addEventListener('input', function() {
+                const digits = this.value.replace(/\D/g, '');
+
+                this.value = digits ?
+                    new Intl.NumberFormat('id-ID').format(Number(digits)) :
+                    '';
+
+                amountInput.value = digits;
+            });
+
         });
     </script>
 
