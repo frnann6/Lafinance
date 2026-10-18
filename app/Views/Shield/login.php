@@ -82,7 +82,7 @@
     <?php if (setting('Auth.allowMagicLinkLogins')) : ?>
         <p class="text-center mt-3 mb-0 small">
             <?= lang('Auth.forgotPassword') ?>
-            <a href="<?= url_to('magic-link') ?>">
+            <a href="<?= url_to('magic-link') ?>" class="text-decoration-none fw-semibold">
                 <?= lang('Auth.useMagicLink') ?>
             </a>
         </p>
