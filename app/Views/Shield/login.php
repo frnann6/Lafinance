@@ -1,6 +1,6 @@
 <?= $this->extend(config('Auth')->views['layout']) ?>
 
-<?= $this->section('title') ?>Masuk<?= $this->endSection() ?>
+<?= $this->section('title') ?>Login<?= $this->endSection() ?>
 
 <?= $this->section('main') ?>
 

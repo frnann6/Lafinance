@@ -1,7 +1,7 @@
 
 <?= $this->extend(config('Auth')->views['layout']) ?>
 
-<?= $this->section('title') ?>Kirim Tautan Login<?= $this->endSection() ?>
+<?= $this->section('title') ?>Magic Link<?= $this->endSection() ?>
 
 <?= $this->section('main') ?>
 
