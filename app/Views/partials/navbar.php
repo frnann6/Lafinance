@@ -1,8 +1,8 @@
 <?php
-$currentSegment = service('uri')->getSegment(1);
+$currentSegment = service('uri')->getSegment(2);
 
 $activeMenu = match ($currentSegment) {
-    'dashboard'    => 'home',
+    'home'         => 'home',
     'transactions' => 'transactions',
     'profile'      => 'profile',
     default        => $activeMenu ?? '',
@@ -14,21 +14,21 @@ $activeMenu = match ($currentSegment) {
 <nav class="bottom-nav">
     <div class="d-flex justify-content-around w-100">
         <a
-            href="<?= site_url('dashboard') ?>"
+            href="<?= site_url('dashboard/home') ?>"
             class="nav-item <?= ($activeMenu ?? '') === 'home' ? 'active' : '' ?>">
             <span class="nav-icon">⌂</span>
             Beranda
         </a>
 
         <a
-            href="<?= site_url('transactions') ?>"
+            href="<?= site_url('dashboard/transactions') ?>"
             class="nav-item <?= ($activeMenu ?? '') === 'transactions' ? 'active' : '' ?>">
             <span class="nav-icon">⇄</span>
             Transaksi
         </a>
 
         <a
-            href="<?= site_url('profile') ?>"
+            href="<?= site_url('dashboard/profile') ?>"
             class="nav-item <?= ($activeMenu ?? '') === 'profile' ? 'active' : '' ?>">
             <span class="nav-icon">♙</span>
             Profil

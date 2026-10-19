@@ -7,25 +7,34 @@ $routes->get('/', 'LafinanceHome::index');
 
 service('auth')->routes($routes);
 
-$routes->get('dashboard', 'Dashboard::index', ['filter' => 'session']);
+$routes->get('dashboard/home', 'Dashboard::index', ['filter' => 'session']);
 
 $routes->get(
-    'transactions',
+    'dashboard/transactions',
     'Transactions::index',
     ['filter' => 'session']
 );
 
 $routes->get(
-    'transactions/create',
+    'dashboard/transactions/create',
     'Transactions::create',
     ['filter' => 'session']
 );
 
 $routes->post(
-    'transactions/store',
+    'dashboard/transactions/store',
     'Transactions::store',
     ['filter' => 'session']
 );
 
-$routes->post('transactions/update/(:num)', 'Transactions::update/$1');
-$routes->post('transactions/delete/(:num)', 'Transactions::delete/$1');
+$routes->post(
+    'dashboard/transactions/update/(:num)',
+    'Transactions::update/$1',
+    ['filter' => 'session']
+);
+
+$routes->post(
+    'dashboard/transactions/delete/(:num)',
+    'Transactions::delete/$1',
+    ['filter' => 'session']
+);

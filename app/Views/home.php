@@ -22,7 +22,7 @@
         </p>
 
 
-        <a href="<?= site_url('dashboard') ?>" class="text-dark">
+        <a href="<?= site_url('dashboard/home') ?>" class="text-dark">
             <button class="btn btn-duitku w-100 text-decoration-none" type="button">Mulai perjalananmu</button>
         </a>
 

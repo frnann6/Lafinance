@@ -69,7 +69,7 @@
             </div>
         <?php endif; ?>
 
-        <form action="<?= site_url('transactions/store') ?>"
+        <form action="<?= site_url('dashboard/transactions/store') ?>"
             method="post" class="form-card">
             <?= csrf_field() ?>
 
@@ -121,7 +121,7 @@
                 Simpan Transaksi
             </button>
 
-            <a href="<?= site_url('transactions') ?>"
+            <a href="<?= site_url('dashboard/transactions') ?>"
                 class="btn btn-light w-100 mt-2 rounded-3 py-2">
                 Batal
             </a>

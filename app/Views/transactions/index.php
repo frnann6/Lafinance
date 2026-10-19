@@ -454,7 +454,7 @@
                             </div>
                         <?php endif; ?>
 
-                        <form action="<?= site_url('transactions/store') ?>"
+                        <form action="<?= site_url('dashboard/transactions/store') ?>"
                             method="post">
 
                             <?= csrf_field() ?>
@@ -794,7 +794,7 @@
                 if (!selectedTransaction) return;
                 const card = selectedTransaction;
                 document.getElementById('editTransactionForm').action =
-                    <?= json_encode(site_url('transactions/update')) ?> + '/' + encodeURIComponent(card.dataset.id);
+                    <?= json_encode(site_url('dashboard/transactions/update')) ?> + '/' + encodeURIComponent(card.dataset.id);
                 document.getElementById('edit_type').value = card.dataset.type || 'income';
                 document.getElementById('edit_category').value = card.dataset.category || '';
 
@@ -817,7 +817,7 @@
             document.getElementById('deleteTransactionButton').addEventListener('click', function() {
                 if (!selectedTransaction) return;
                 document.getElementById('deleteTransactionForm').action =
-                    <?= json_encode(site_url('transactions/delete')) ?> + '/' + encodeURIComponent(selectedTransaction.dataset.id);
+                    <?= json_encode(site_url('dashboard/transactions/delete')) ?> + '/' + encodeURIComponent(selectedTransaction.dataset.id);
                 bootstrap.Modal.getOrCreateInstance(detailModal).hide();
                 detailModal.addEventListener('hidden.bs.modal', function openDeleteOnce() {
                     detailModal.removeEventListener('hidden.bs.modal', openDeleteOnce);

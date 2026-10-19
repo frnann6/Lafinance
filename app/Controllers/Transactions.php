@@ -79,7 +79,7 @@ class Transactions extends BaseController
                 ->with('errors', $transactionModel->errors());
         }
 
-        return redirect()->to(site_url('transactions'))
+        return redirect()->to(site_url('dashboard/transactions'))
             ->with('message', 'Transaksi berhasil disimpan.');
     }
 
@@ -94,7 +94,7 @@ class Transactions extends BaseController
             ->find($id);
 
         if (! $transaction) {
-            return redirect()->to(site_url('transactions'))
+            return redirect()->to(site_url('dashboard/transactions'))
                 ->with('error', 'Transaksi tidak ditemukan.');
         }
 
@@ -115,7 +115,7 @@ class Transactions extends BaseController
         ];
 
         if (! $this->validateData($data, $rules)) {
-            return redirect()->to(site_url('transactions'))
+            return redirect()->to(site_url('dashboard/transactions'))
                 ->withInput()
                 ->with('errors', $this->validator->getErrors())
                 ->with('error', 'Periksa kembali data transaksi.');
@@ -141,7 +141,7 @@ class Transactions extends BaseController
                 - (float) ($totalPengeluaran['amount'] ?? 0);
 
             if ($saldo <= 0 || (float) $data['amount'] > $saldo) {
-                return redirect()->to(site_url('transactions'))
+                return redirect()->to(site_url('dashboard/transactions'))
                     ->with('error', $saldo <= 0
                         ? 'Transaksi tidak dapat diperbarui karena saldo tidak mencukupi untuk pengeluaran ini.'
                         : 'Saldo kamu tidak mencukupi untuk pengeluaran ini.');
@@ -149,12 +149,12 @@ class Transactions extends BaseController
         }
 
         if (! $transactionModel->update($id, $data)) {
-            return redirect()->to(site_url('transactions'))
+            return redirect()->to(site_url('dashboard/transactions'))
                 ->with('errors', $transactionModel->errors())
                 ->with('error', 'Transaksi gagal diperbarui.');
         }
 
-        return redirect()->to(site_url('transactions'))
+        return redirect()->to(site_url('dashboard/transactions'))
             ->with('message', 'Transaksi berhasil diperbarui.');
     }
 
@@ -169,16 +169,16 @@ class Transactions extends BaseController
             ->find($id);
 
         if (! $transaction) {
-            return redirect()->to(site_url('transactions'))
+            return redirect()->to(site_url('dashboard/transactions'))
                 ->with('error', 'Transaksi tidak ditemukan.');
         }
 
         if (! $transactionModel->delete($id)) {
-            return redirect()->to(site_url('transactions'))
+            return redirect()->to(site_url('dashboard/transactions'))
                 ->with('error', 'Transaksi gagal dihapus.');
         }
 
-        return redirect()->to(site_url('transactions'))
+        return redirect()->to(site_url('dashboard/transactions'))
             ->with('message', 'Transaksi berhasil dihapus.');
     }
 }
