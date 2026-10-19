@@ -376,10 +376,12 @@
                     tabindex="0"
                     data-bs-toggle="modal"
                     data-bs-target="#transactionDetailModal"
+                    data-id="<?= esc((string) $transaction['id'], 'attr') ?>"
                     data-type="<?= esc($transaction['type'], 'attr') ?>"
                     data-category="<?= esc($transaction['category'], 'attr') ?>"
                     data-amount="<?= esc((string) $transaction['amount'], 'attr') ?>"
                     data-date="<?= esc(date('d M Y', strtotime($transaction['transaction_date'])), 'attr') ?>"
+                    data-date-iso="<?= esc($transaction['transaction_date'], 'attr') ?>"
                     data-description="<?= esc($transaction['description'] ?? '', 'attr') ?>">
                     <div class="d-flex justify-content-between align-items-start gap-3">
 
@@ -624,6 +626,94 @@
             </div>
         </div>
 
+        <!-- Modal Edit Transaksi -->
+        <div class="modal fade" id="editTransactionModal" tabindex="-1"
+            aria-labelledby="editTransactionModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content border-0 rounded-4">
+                    <div class="modal-header border-0 pb-0">
+                        <div>
+                            <h2 class="modal-title fs-5 fw-bold" id="editTransactionModalLabel">Edit Transaksi</h2>
+                            <p class="text-secondary small mb-0">Perbarui detail transaksi pilihanmu.</p>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                    </div>
+                    <div class="modal-body pt-3">
+                        <form id="editTransactionForm" method="post" action="">
+                            <?= csrf_field() ?>
+                            <div class="mb-3">
+                                <label for="edit_type" class="form-label fw-semibold">Jenis transaksi</label>
+                                <select class="form-select rounded-3 py-2" id="edit_type" name="type" required>
+                                    <option value="income">Pemasukan</option>
+                                    <option value="expense">Pengeluaran</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit_category" class="form-label fw-semibold">Kategori</label>
+                                <input class="form-control rounded-3 py-2" id="edit_category" name="category" maxlength="100" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="edit_amount_display" class="form-label fw-semibold">
+                                    Nominal transaksi
+                                </label>
+
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text bg-light fw-semibold" style="font-size: 15px;">
+                                        Rp
+                                    </span>
+                                    <input
+                                        type="text"
+                                        id="edit_amount_display"
+                                        class="form-control rounded-end-3"
+                                        inputmode="numeric"
+                                        autocomplete="off"
+                                        placeholder="0"
+                                        required>
+                                </div>
+
+                                <input type="hidden" id="edit_amount" name="amount" value="">
+
+                                <small class="text-secondary d-block mt-2">
+                                    Masukkan nominal dalam Rupiah.
+                                </small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="edit_transaction_date" class="form-label fw-semibold">Tanggal</label>
+                                <input class="form-control rounded-3 py-2" id="edit_transaction_date" name="transaction_date" type="date" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="edit_description" class="form-label fw-semibold">Catatan <span class="text-secondary fw-normal">(opsional)</span></label>
+                                <textarea class="form-control rounded-3" id="edit_description" name="description" rows="3" maxlength="1000" placeholder="Tambahkan catatan jika perlu"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-add w-100 py-3">Simpan Perubahan</button>
+                            <button type="button" class="btn btn-light w-100 mt-2 rounded-3 py-2" data-bs-dismiss="modal">Batal</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Konfirmasi Hapus -->
+        <div class="modal fade" id="deleteTransactionModal" tabindex="-1"
+            aria-labelledby="deleteTransactionModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 rounded-4">
+                    <div class="modal-body text-center p-4">
+                        <div class="fs-1 text-danger mb-2"><i class="bi bi-trash3"></i></div>
+                        <h2 class="h5 fw-bold" id="deleteTransactionModalLabel">Hapus transaksi?</h2>
+                        <p class="text-secondary mb-4">Transaksi yang dihapus tidak dapat dikembalikan.</p>
+                        <form id="deleteTransactionForm" method="post" action="">
+                            <?= csrf_field() ?>
+                            <button type="submit" class="btn btn-danger w-100 rounded-3 py-2">Ya, Hapus Transaksi</button>
+                            <button type="button" class="btn btn-light w-100 mt-2 rounded-3 py-2" data-bs-dismiss="modal">Batal</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Modal Detail Transaksi -->
         <div class="modal fade" id="transactionDetailModal"
             tabindex="-1" aria-labelledby="transactionDetailModalLabel"
@@ -657,6 +747,20 @@
                             <div class="small text-secondary mb-1">Catatan</div>
                             <div id="detailDescription" style="white-space:pre-wrap; overflow-wrap:anywhere;">-</div>
                         </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="button"
+                                class="btn btn-success rounded-3 py-2"
+                                id="editTransactionButton">
+                                Edit Transaksi
+                            </button>
+                            <button type="button"
+                                class="btn btn-outline-danger rounded-3 py-2"
+                                id="deleteTransactionButton">
+                                Hapus Transaksi
+                            </button>
+                        </div>
+
                         <button type="button" class="btn btn-light w-100 mt-4 rounded-3 py-2"
                             data-bs-dismiss="modal">
                             Tutup
@@ -675,6 +779,51 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const detailModal = document.getElementById('transactionDetailModal');
+            const editModalElement = document.getElementById('editTransactionModal');
+            const deleteModalElement = document.getElementById('deleteTransactionModal');
+            const editModal = bootstrap.Modal.getOrCreateInstance(editModalElement);
+            const deleteModal = bootstrap.Modal.getOrCreateInstance(deleteModalElement);
+            let selectedTransaction = null;
+
+            detailModal.addEventListener('show.bs.modal', function(event) {
+                const card = event.relatedTarget;
+                if (card && card.dataset) selectedTransaction = card;
+            });
+
+            document.getElementById('editTransactionButton').addEventListener('click', function() {
+                if (!selectedTransaction) return;
+                const card = selectedTransaction;
+                document.getElementById('editTransactionForm').action =
+                    <?= json_encode(site_url('transactions/update')) ?> + '/' + encodeURIComponent(card.dataset.id);
+                document.getElementById('edit_type').value = card.dataset.type || 'income';
+                document.getElementById('edit_category').value = card.dataset.category || '';
+
+                const editAmount = card.dataset.amount || '';
+
+                document.getElementById('edit_amount').value = editAmount;
+                document.getElementById('edit_amount_display').value = editAmount ?
+                    new Intl.NumberFormat('id-ID').format(Number(editAmount)) :
+                    '';
+
+                document.getElementById('edit_transaction_date').value = card.dataset.dateIso || '';
+                document.getElementById('edit_description').value = card.dataset.description || '';
+                bootstrap.Modal.getOrCreateInstance(detailModal).hide();
+                detailModal.addEventListener('hidden.bs.modal', function openEditOnce() {
+                    detailModal.removeEventListener('hidden.bs.modal', openEditOnce);
+                    editModal.show();
+                });
+            });
+
+            document.getElementById('deleteTransactionButton').addEventListener('click', function() {
+                if (!selectedTransaction) return;
+                document.getElementById('deleteTransactionForm').action =
+                    <?= json_encode(site_url('transactions/delete')) ?> + '/' + encodeURIComponent(selectedTransaction.dataset.id);
+                bootstrap.Modal.getOrCreateInstance(detailModal).hide();
+                detailModal.addEventListener('hidden.bs.modal', function openDeleteOnce() {
+                    detailModal.removeEventListener('hidden.bs.modal', openDeleteOnce);
+                    deleteModal.show();
+                });
+            });
 
             detailModal.addEventListener('show.bs.modal', function(event) {
                 const card = event.relatedTarget;
@@ -839,6 +988,23 @@
 
                 amountInput.value = digits;
             });
+
+
+            const amountFormatter = new Intl.NumberFormat('id-ID');
+
+            const editAmountDisplay = document.getElementById('edit_amount_display');
+            const editAmountInput = document.getElementById('edit_amount');
+
+            editAmountDisplay.addEventListener('input', function() {
+                const digits = this.value.replace(/\D/g, '');
+
+                this.value = digits ?
+                    amountFormatter.format(Number(digits)) :
+                    '';
+
+                editAmountInput.value = digits;
+            });
+
 
         });
     </script>

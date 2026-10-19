@@ -26,3 +26,6 @@ $routes->post(
     'Transactions::store',
     ['filter' => 'session']
 );
+
+$routes->post('transactions/update/(:num)', 'Transactions::update/$1');
+$routes->post('transactions/delete/(:num)', 'Transactions::delete/$1');
