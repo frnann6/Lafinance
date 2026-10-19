@@ -63,6 +63,33 @@
             background: #fff;
             border: 1px solid #e5e7eb;
             border-radius: 20px;
+            cursor: pointer;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .transaction-card:hover,
+        .transaction-card:focus-visible {
+            border-color: #86b99a;
+            outline: none;
+        }
+
+        .transaction-card:active {
+            transform: scale(0.99);
+        }
+
+        #transactionDetailModal .modal-content {
+            border: 0;
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        #transactionDetailModal .detail-row {
+            padding: 12px 0;
+            border-bottom: 1px solid #edf0ed;
+        }
+
+        #transactionDetailModal .detail-row:last-child {
+            border-bottom: 0;
         }
 
         .amount {
@@ -343,7 +370,17 @@
         <?php else: ?>
 
             <?php foreach ($transactions as $transaction): ?>
-                <article class="transaction-card">
+                <article
+                    class="transaction-card"
+                    role="button"
+                    tabindex="0"
+                    data-bs-toggle="modal"
+                    data-bs-target="#transactionDetailModal"
+                    data-type="<?= esc($transaction['type'], 'attr') ?>"
+                    data-category="<?= esc($transaction['category'], 'attr') ?>"
+                    data-amount="<?= esc((string) $transaction['amount'], 'attr') ?>"
+                    data-date="<?= esc(date('d M Y', strtotime($transaction['transaction_date'])), 'attr') ?>"
+                    data-description="<?= esc($transaction['description'] ?? '', 'attr') ?>">
                     <div class="d-flex justify-content-between align-items-start gap-3">
 
                         <div class="flex-grow-1">
@@ -587,11 +624,96 @@
             </div>
         </div>
 
+        <!-- Modal Detail Transaksi -->
+        <div class="modal fade" id="transactionDetailModal"
+            tabindex="-1" aria-labelledby="transactionDetailModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header border-0 pb-0">
+                        <div>
+                            <h2 class="modal-title fs-5 fw-bold" id="transactionDetailModalLabel">
+                                Detail Transaksi
+                            </h2>
+                            <p class="text-secondary small mb-0">
+                                Informasi transaksi yang kamu pilih.
+                            </p>
+                        </div>
+                        <button type="button" class="btn-close"
+                            data-bs-dismiss="modal" aria-label="Tutup"></button>
+                    </div>
+                    <div class="modal-body px-4 pt-3 pb-4">
+                        <div class="rounded-4 p-3 mb-3" style="background:#f5f8f5;">
+                            <div class="small text-secondary mb-1" id="detailType"></div>
+                            <div class="fs-4 fw-bold" id="detailAmount"></div>
+                            <div class="fw-semibold mt-1" id="detailCategory"></div>
+                        </div>
+
+                        <div class="detail-row">
+                            <div class="small text-secondary mb-1">Tanggal</div>
+                            <div class="fw-semibold" id="detailDate">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="small text-secondary mb-1">Catatan</div>
+                            <div id="detailDescription" style="white-space:pre-wrap; overflow-wrap:anywhere;">-</div>
+                        </div>
+                        <button type="button" class="btn btn-light w-100 mt-4 rounded-3 py-2"
+                            data-bs-dismiss="modal">
+                            Tutup
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <?= $this->include('partials/navbar', ['activeMenu' => 'transactions']) ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const detailModal = document.getElementById('transactionDetailModal');
+
+            detailModal.addEventListener('show.bs.modal', function(event) {
+                const card = event.relatedTarget;
+                if (!card) return;
+
+                const isIncome = card.dataset.type === 'income';
+                const amount = Number(card.dataset.amount || 0);
+
+                document.getElementById('detailType').textContent =
+                    isIncome ? 'Pemasukan' : 'Pengeluaran';
+
+                const amountElement = document.getElementById('detailAmount');
+                amountElement.textContent =
+                    (isIncome ? '+ Rp' : '− Rp') +
+                    new Intl.NumberFormat('id-ID', {
+                        maximumFractionDigits: 0
+                    }).format(amount);
+                amountElement.style.color = isIncome ? '#15803d' : '#dc2626';
+
+                document.getElementById('detailCategory').textContent =
+                    card.dataset.category || '-';
+                document.getElementById('detailDate').textContent =
+                    card.dataset.date || '-';
+                document.getElementById('detailDescription').textContent =
+                    card.dataset.description || 'Tidak ada catatan.';
+            });
+
+            document.querySelectorAll('.transaction-card[role="button"]').forEach(function(card) {
+                card.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        bootstrap.Modal.getOrCreateInstance(
+                            document.getElementById('transactionDetailModal')
+                        ).show(card);
+                    }
+                });
+            });
+        });
+    </script>
 
     <?php if (session('errors')): ?>
         <script>
