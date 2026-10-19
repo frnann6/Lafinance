@@ -748,23 +748,23 @@
                             <div id="detailDescription" style="white-space:pre-wrap; overflow-wrap:anywhere;">-</div>
                         </div>
 
-                        <div class="d-grid gap-2 mt-4">
+                        <div class="d-flex justify-content-end gap-2 mt-4">
                             <button type="button"
-                                class="btn btn-success rounded-3 py-2"
+                                class="btn btn-outline-success rounded-5 py-2"
                                 id="editTransactionButton">
-                                Edit Transaksi
+                                <i class="bi bi-pencil"></i> Edit
                             </button>
                             <button type="button"
-                                class="btn btn-outline-danger rounded-3 py-2"
+                                class="btn btn-outline-danger rounded-5 py-2"
                                 id="deleteTransactionButton">
-                                Hapus Transaksi
+                                <i class="bi bi-trash3"></i> Delete
                             </button>
                         </div>
 
-                        <button type="button" class="btn btn-light w-100 mt-4 rounded-3 py-2"
+                        <!-- <button type="button" class="btn btn-light w-100 mt-4 rounded-3 py-2"
                             data-bs-dismiss="modal">
                             Tutup
-                        </button>
+                        </button> -->
                     </div>
                 </div>
             </div>
