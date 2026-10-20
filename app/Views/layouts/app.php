@@ -5,18 +5,26 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#166534">
-    <title><?= esc($title ?? 'DuitKu') ?></title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    <link rel="shortcut icon" href="<?= base_url('assets/img/logos/lafern-circle.png') ?>" type="image/x-icon">
+    <title>Dashboard | Lafinance</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet">
 
     <style>
+        :root {
+            --lafinance-green: #166534;
+            --lafinance-bg: #f5f8f5;
+        }
+
         body {
             margin: 0;
             min-height: 100vh;
-            background: #f5f8f5;
+            background: var(--lafinance-bg);
             color: #1f2937;
-            font-family: system-ui, sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
         }
 
         .app-container {
@@ -24,47 +32,13 @@
             max-width: 430px;
             min-height: 100vh;
             margin: 0 auto;
-            padding: 24px 20px 100px;
+            padding: 28px 20px 100px;
         }
 
         .brand {
-            color: #166534;
+            color: var(--lafinance-green);
             font-size: 20px;
             font-weight: 800;
-        }
-
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            max-width: 430px;
-            padding: 12px 8px calc(12px + env(safe-area-inset-bottom));
-            background: #fff;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .nav-item {
-            flex: 1;
-            color: #6b7280;
-            font-size: 12px;
-            text-align: center;
-            text-decoration: none;
-        }
-
-        .nav-item.active {
-            color: #166534;
-            font-weight: 700;
-        }
-
-        .nav-icon {
-            display: block;
-            margin-bottom: 4px;
-            font-size: 20px;
         }
     </style>
 </head>
@@ -72,12 +46,13 @@
 <body>
 
     <main class="app-container">
-        <header class="brand mb-4">DuitKu</header>
 
-        <?= $this->renderSection('content') ?>
+        <div class="d-flex align-items-center gap-2">
+            <img src="<?= base_url('assets/img/logos/lafern-circle.png') ?>" width="35px" height="auto" alt="">
+            <header class="brand">Lafinance</header>
+        </div>
+
     </main>
-
-    <?= $this->include('partials/navbar') ?>
 
 </body>
 

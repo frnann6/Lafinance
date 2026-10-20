@@ -223,13 +223,6 @@ $nama = $user?->username ?? 'Pengguna';
             <?php endif; ?>
         </section>
 
-        <div class="mt-4">
-            <a href="<?= url_to('logout') ?>"
-                class="btn btn-outline-danger w-100 rounded-3 py-2">
-                Keluar dari akun
-            </a>
-        </div>
-
     </main>
 
     <?= $this->include('partials/navbar', ['activeMenu' => 'home']) ?>

@@ -38,3 +38,7 @@ $routes->post(
     'Transactions::delete/$1',
     ['filter' => 'session']
 );
+
+$routes->get('dashboard/profile', 'Profile::index', ['filter' => 'session']);
+$routes->post('dashboard/profile/photo', 'Profile::updatePhoto', ['filter' => 'session']);
+$routes->post('dashboard/profile/photo/delete', 'Profile::deletePhoto', ['filter' => 'session']);
