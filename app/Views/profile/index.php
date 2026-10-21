@@ -59,6 +59,30 @@ $balance = $totalIncome - $totalExpense;
             font-size: 14px;
         }
 
+        /* ALERT */
+
+        .toast-alert {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            z-index: 2000;
+            width: min(92vw, 420px);
+            transform: translateX(-50%);
+            animation: toastIn 0.35s ease-out;
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
         .profile-panel,
         .summary-panel {
             margin-top: 20px;
@@ -206,22 +230,25 @@ $balance = $totalIncome - $totalExpense;
         </section>
 
         <?php if (session()->getFlashdata('message')): ?>
-            <div class="alert alert-success mt-3" role="status">
+            <div class="alert alert-success alert-dismissible fade show mt-3 toast-alert" role="alert">
                 <?= esc(session()->getFlashdata('message')) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
             </div>
         <?php endif; ?>
 
         <?php if (session()->getFlashdata('error')): ?>
-            <div class="alert alert-danger mt-3" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show mt-3 toast-alert" role="alert">
                 <?= esc(session()->getFlashdata('error')) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
             </div>
         <?php endif; ?>
 
         <?php if (session('errors')): ?>
-            <div class="alert alert-danger mt-3" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show mt-3 toast-alert" role="alert">
                 <?php foreach (session('errors') as $error): ?>
                     <div><?= esc($error) ?></div>
                 <?php endforeach; ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
             </div>
         <?php endif; ?>
 
