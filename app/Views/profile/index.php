@@ -330,13 +330,32 @@ $balance = $totalIncome - $totalExpense;
             </div>
         </section>
 
-        <a href="<?= url_to('logout') ?>" class="btn btn-outline-danger w-100 py-2 logout-button">
+        <button type="button" class="btn btn-outline-danger w-100 py-2 logout-button"
+            data-bs-toggle="modal" data-bs-target="#logoutModal">
             <i class="bi bi-box-arrow-right me-2" aria-hidden="true"></i>
             Logout
-        </a>
+        </button>
     </main>
 
     <?= $this->include('partials/navbar', ['activeMenu' => 'profile']) ?>
+
+    <div class="modal fade" id="logoutModal" tabindex="-1"
+        aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4">
+                <div class="modal-body text-center p-4">
+                    <div class="fs-1 text-danger mb-2">
+                        <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
+                    </div>
+                    <h2 class="h5 fw-bold" id="logoutModalLabel">Logout?</h2>
+                    <p class="text-secondary mb-4">Kamu akan keluar dari akun ini.</p>
+                    <a href="<?= url_to('logout') ?>" class="btn btn-danger w-100 rounded-3 py-2">Ya, Logout</a>
+                    <button type="button" class="btn btn-light w-100 mt-2 rounded-3 py-2"
+                        data-bs-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <?php if (! empty($photoPath)): ?>
         <div class="modal fade" id="deleteProfilePhotoModal" tabindex="-1"
