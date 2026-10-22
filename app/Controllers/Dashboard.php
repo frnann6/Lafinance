@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\TransactionModel;
+use App\Models\UserProfileModel;
 
 class Dashboard extends BaseController
 {
@@ -41,8 +42,13 @@ class Dashboard extends BaseController
             ->orderBy('id', 'DESC')
             ->findAll(3);
 
+        $profile = (new UserProfileModel())
+            ->where('user_id', $userId)
+            ->first();
+
         return view('dashboard', [
             'activeMenu'       => 'home',
+            'photoPath'        => $profile['photo_path'] ?? null,
             'totalPemasukan'   => $pemasukan,
             'totalPengeluaran' => $pengeluaran,
             'totalSaldo'       => $pemasukan - $pengeluaran,

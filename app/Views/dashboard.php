@@ -1,6 +1,8 @@
 <?php
 $user = auth()->user();
 $nama = $user?->username ?? 'Pengguna';
+$initial = strtoupper(substr(trim($nama), 0, 1));
+$photoPath = $photoPath ?? null;
 ?>
 
 <!doctype html>
@@ -47,11 +49,39 @@ $nama = $user?->username ?? 'Pengguna';
         }
 
         .welcome {
-            margin-top: 28px;
             font-size: 24px;
             font-weight: 800;
             letter-spacing: -0.5px;
             overflow-wrap: anywhere;
+        }
+
+        .welcome-row {
+            margin-top: 28px;
+        }
+
+        .welcome-text {
+            min-width: 0;
+        }
+
+        .welcome-avatar {
+            display: grid;
+            width: 52px;
+            height: 52px;
+            flex: 0 0 52px;
+            place-items: center;
+            overflow: hidden;
+            border-radius: 50%;
+            background: #e8f3eb;
+            color: var(--lafinance-green);
+            font-size: 20px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .welcome-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .muted {
@@ -125,13 +155,26 @@ $nama = $user?->username ?? 'Pengguna';
         <section>
             <p class="muted mb-1 mt-4">Ringkasan keuanganmu</p>
 
-            <h1 class="welcome">
-                Halo, <?= esc($nama) ?>
-            </h1>
+            <div class="welcome-row d-flex align-items-center gap-3">
+                <a href="<?= site_url('dashboard/profile') ?>" class="welcome-avatar"
+                    aria-label="Buka profil <?= esc($nama, 'attr') ?>">
+                    <?php if (! empty($photoPath)): ?>
+                        <img src="<?= esc(base_url($photoPath), 'attr') ?>" alt="Foto profil <?= esc($nama, 'attr') ?>">
+                    <?php else: ?>
+                        <?= esc($initial) ?>
+                    <?php endif; ?>
+                </a>
 
-            <p class="muted mb-0">
-                Yuk, kelola keuanganmu hari ini.
-            </p>
+                <div class="welcome-text">
+                    <h1 class="welcome mb-1">
+                        Halo, <?= esc($nama) ?>
+                    </h1>
+
+                    <p class="muted mb-0">
+                        Yuk, kelola keuanganmu hari ini.
+                    </p>
+                </div>
+            </div>
         </section>
 
         <section class="balance-card">
