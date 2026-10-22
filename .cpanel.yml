@@ -1,0 +1,4 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/lafp5626/public_html/git
+    - /bin/cp -r * $DEPLOYPATH
