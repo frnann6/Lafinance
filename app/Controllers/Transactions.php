@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\TransactionModel;
+use App\Models\UserProfileModel;
 
 class Transactions extends BaseController
 {
@@ -19,8 +20,14 @@ class Transactions extends BaseController
             ->orderBy('id', 'DESC')
             ->findAll();
 
+        $profile = (new UserProfileModel())
+            ->where('user_id', $user->id)
+            ->first();
+
         return view('transactions/index', [
             'transactions' => $transactions,
+            'displayName'  => $user->username ?? 'Pengguna',
+            'photoPath'    => $profile['photo_path'] ?? null,
         ]);
     }
 

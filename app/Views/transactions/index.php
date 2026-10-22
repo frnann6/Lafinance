@@ -1,3 +1,9 @@
+<?php
+$displayName = trim((string) ($displayName ?? ''));
+$displayName = $displayName !== '' ? $displayName : 'Pengguna';
+$initial = strtoupper(substr($displayName, 0, 1));
+$photoPath = $photoPath ?? null;
+?>
 <!doctype html>
 <html lang="id">
 
@@ -90,6 +96,31 @@
 
         #transactionDetailModal .detail-row:last-child {
             border-bottom: 0;
+        }
+
+        #transactionDetailModal .added-by {
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        #transactionDetailModal .added-by-avatar {
+            display: grid;
+            width: 22px;
+            height: 22px;
+            flex: 0 0 22px;
+            place-items: center;
+            overflow: hidden;
+            border-radius: 50%;
+            background: #e8f3eb;
+            color: var(--lafinance-green);
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        #transactionDetailModal .added-by-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .amount {
@@ -746,6 +777,17 @@
                         <div class="detail-row">
                             <div class="small text-secondary mb-1">Catatan</div>
                             <div id="detailDescription" style="white-space:pre-wrap; overflow-wrap:anywhere;">-</div>
+                        </div>
+
+                        <div class="detail-row d-flex align-items-center gap-2 added-by">
+                            <span class="added-by-avatar" aria-hidden="true">
+                                <?php if (! empty($photoPath)): ?>
+                                    <img src="<?= esc(base_url($photoPath), 'attr') ?>" alt="">
+                                <?php else: ?>
+                                    <?= esc($initial) ?>
+                                <?php endif; ?>
+                            </span>
+                            <span>Ditambahkan oleh <span class="fw-semibold"><?= esc($displayName) ?></span></span>
                         </div>
 
                         <div class="d-flex justify-content-end gap-2 mt-4">
