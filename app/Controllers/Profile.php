@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\TransactionModel;
 use App\Models\UserProfileModel;
+use CodeIgniter\Shield\Exceptions\ValidationException;
+use CodeIgniter\Shield\Models\UserModel;
 
 class Profile extends BaseController
 {
@@ -36,6 +38,53 @@ class Profile extends BaseController
             'totalIncome' => (float) ($income['amount'] ?? 0),
             'totalExpense' => (float) ($expense['amount'] ?? 0),
         ]);
+    }
+
+    public function updateUsername()
+    {
+        $user = auth()->user();
+        $username = trim((string) $this->request->getPost('username'));
+        $usernameRules = config('Auth')->usernameValidationRules;
+        $usernameRules['rules'] = (array) $usernameRules['rules'];
+        $usernameRules['rules'][] = sprintf(
+            'is_unique[%s.username,id,%s]',
+            config('Auth')->tables['users'],
+            $user->id,
+        );
+
+        if (! $this->validateData(
+            ['username' => $username],
+            ['username' => $usernameRules],
+            [],
+            config('Auth')->DBGroup,
+        )) {
+            return redirect()->to(site_url('dashboard/profile'))
+                ->withInput()
+                ->with('errors', $this->validator->getErrors())
+                ->with('showUsernameModal', true);
+        }
+
+        $user->username = $username;
+        $userModel = model(UserModel::class);
+
+        try {
+            $saved = $userModel->save($user);
+        } catch (ValidationException) {
+            return redirect()->to(site_url('dashboard/profile'))
+                ->withInput()
+                ->with('errors', $userModel->errors())
+                ->with('showUsernameModal', true);
+        }
+
+        if (! $saved) {
+            return redirect()->to(site_url('dashboard/profile'))
+                ->withInput()
+                ->with('errors', $userModel->errors())
+                ->with('showUsernameModal', true);
+        }
+
+        return redirect()->to(site_url('dashboard/profile'))
+            ->with('message', 'Username berhasil diperbarui.');
     }
 
     public function updatePhoto()

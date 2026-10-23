@@ -214,6 +214,14 @@ $balance = $totalIncome - $totalExpense;
             border-radius: 14px;
             font-weight: 650;
         }
+
+        .btn-edit-usern {
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            background: transparent !important;
+            padding-bottom: 10px;
+        }
     </style>
 </head>
 
@@ -262,7 +270,14 @@ $balance = $totalIncome - $totalExpense;
                     <?php endif; ?>
                 </div>
                 <div class="min-w-0">
-                    <h2 class="profile-name mb-1"><?= esc($displayName) ?></h2>
+                    <div class="d-flex align-items-center">
+                        <h2 class="profile-name mb-1"><?= esc($displayName) ?></h2>
+                        <button type="button" class="btn btn-sm flex-shrink-0 btn-edit-usern"
+                            data-bs-toggle="modal" data-bs-target="#editUsernameModal"
+                            aria-label="Edit username" title="Edit username">
+                            <i class="bi bi-pencil" aria-hidden="true"></i>
+                        </button>
+                    </div>
                     <p class="profile-email muted mb-0"><?= esc($email ?: 'Email belum tersedia') ?></p>
                 </div>
             </div>
@@ -339,6 +354,40 @@ $balance = $totalIncome - $totalExpense;
 
     <?= $this->include('partials/navbar', ['activeMenu' => 'profile']) ?>
 
+    <div class="modal fade" id="editUsernameModal" tabindex="-1"
+        aria-labelledby="editUsernameModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4">
+                <form action="<?= site_url('dashboard/profile/username') ?>" method="post">
+                    <?= csrf_field() ?>
+                    <div class="modal-header border-0 pb-0">
+                        <h2 class="modal-title h5 fw-bold" id="editUsernameModalLabel">Edit username</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="profile-username" class="form-label">Username</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="profile-username"
+                            name="username"
+                            value="<?= esc(old('username', $displayName), 'attr') ?>"
+                            minlength="3"
+                            maxlength="30"
+                            pattern="[A-Za-z0-9.]+"
+                            autocomplete="username"
+                            required>
+                        <div class="form-text">3–30 karakter; hanya huruf, angka, dan titik.</div>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-success">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="logoutModal" tabindex="-1"
         aria-labelledby="logoutModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -383,6 +432,10 @@ $balance = $totalIncome - $totalExpense;
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.js"></script>
     <script>
+        <?php if (session()->getFlashdata('showUsernameModal')): ?>
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('editUsernameModal')).show();
+        <?php endif; ?>
+
         document.addEventListener('DOMContentLoaded', function() {
             const photoInput = document.getElementById('profile-photo');
             const cropPanel = document.getElementById('photo-crop-panel');
