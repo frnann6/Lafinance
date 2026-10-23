@@ -6,6 +6,7 @@ use App\Models\TransactionModel;
 use App\Models\UserProfileModel;
 use CodeIgniter\Shield\Exceptions\ValidationException;
 use CodeIgniter\Shield\Models\UserModel;
+use CodeIgniter\Shield\Models\UserIdentityModel;
 
 class Profile extends BaseController
 {
@@ -40,10 +41,13 @@ class Profile extends BaseController
         ]);
     }
 
-    public function updateUsername()
+    public function updateProfile()
     {
         $user = auth()->user();
         $username = trim((string) $this->request->getPost('username'));
+        $email = trim((string) $this->request->getPost('email'));
+        $identity = $user->getEmailIdentity();
+
         $usernameRules = config('Auth')->usernameValidationRules;
         $usernameRules['rules'] = (array) $usernameRules['rules'];
         $usernameRules['rules'][] = sprintf(
@@ -52,39 +56,78 @@ class Profile extends BaseController
             $user->id,
         );
 
+        $emailRules = config('Auth')->emailValidationRules;
+        $emailRules['rules'] = (array) $emailRules['rules'];
+        $uniqueEmailRule = sprintf(
+            'is_unique[%s.secret',
+            config('Auth')->tables['identities'],
+        );
+        if ($identity !== null) {
+            $uniqueEmailRule .= sprintf(',id,%s', $identity->id);
+        }
+        $emailRules['rules'][] = $uniqueEmailRule . ']';
+
         if (! $this->validateData(
-            ['username' => $username],
-            ['username' => $usernameRules],
+            ['username' => $username, 'email' => $email],
+            ['username' => $usernameRules, 'email' => $emailRules],
             [],
             config('Auth')->DBGroup,
         )) {
             return redirect()->to(site_url('dashboard/profile'))
                 ->withInput()
                 ->with('errors', $this->validator->getErrors())
-                ->with('showUsernameModal', true);
+                ->with('showProfileModal', true);
         }
 
-        $user->username = $username;
-        $userModel = model(UserModel::class);
+        $database = \Config\Database::connect(config('Auth')->DBGroup);
+        $database->transBegin();
 
         try {
-            $saved = $userModel->save($user);
+            if ($username !== $user->username) {
+                $user->username = $username;
+                $userModel = model(UserModel::class);
+
+                if (! $userModel->save($user)) {
+                    $database->transRollback();
+
+                    return redirect()->to(site_url('dashboard/profile'))
+                        ->withInput()
+                        ->with('errors', $userModel->errors())
+                        ->with('showProfileModal', true);
+                }
+            }
+
+            if ($identity === null) {
+                $user->createEmailIdentity([
+                    'email' => $email,
+                    'password' => '',
+                ]);
+            } elseif ($email !== $identity->secret) {
+                $identity->secret = $email;
+                $identityModel = model(UserIdentityModel::class);
+
+                if (! $identityModel->save($identity)) {
+                    $database->transRollback();
+
+                    return redirect()->to(site_url('dashboard/profile'))
+                        ->withInput()
+                        ->with('errors', $identityModel->errors())
+                        ->with('showProfileModal', true);
+                }
+            }
         } catch (ValidationException) {
+            $database->transRollback();
+
             return redirect()->to(site_url('dashboard/profile'))
                 ->withInput()
-                ->with('errors', $userModel->errors())
-                ->with('showUsernameModal', true);
+                ->with('error', 'Username atau email gagal diperbarui.')
+                ->with('showProfileModal', true);
         }
 
-        if (! $saved) {
-            return redirect()->to(site_url('dashboard/profile'))
-                ->withInput()
-                ->with('errors', $userModel->errors())
-                ->with('showUsernameModal', true);
-        }
+        $database->transCommit();
 
         return redirect()->to(site_url('dashboard/profile'))
-            ->with('message', 'Username berhasil diperbarui.');
+            ->with('message', 'Username dan email berhasil diperbarui.');
     }
 
     public function updatePhoto()
