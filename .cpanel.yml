@@ -1,7 +1,8 @@
 deployment:
   tasks:
-    - /bin/date >> /home/lafp5626/deploy-test.log
-    - /bin/echo "Deployment LaFinance dimulai" >> /home/lafp5626/deploy-test.log
-    - /bin/cp -av /home/lafp5626/repositories/Lafinance/app/. /home/lafp5626/Lafinance/app/ >> /home/lafp5626/deploy-test.log 2>&1
-    - /bin/cp -av /home/lafp5626/repositories/Lafinance/public/. /home/lafp5626/public_html/ >> /home/lafp5626/deploy-test.log 2>&1
-    - /bin/echo "Deployment LaFinance selesai" >> /home/lafp5626/deploy-test.log
+    - export REPOPATH=/home/lafp5626/repositories/Lafinance
+    - export APPPATH=/home/lafp5626/lafinance
+    - export PUBLICPATH=/home/lafp5626/public_html
+
+    - /bin/cp -a $REPOPATH/app/. $APPPATH/app/
+    - /bin/cp -a $REPOPATH/public/. $PUBLICPATH/
