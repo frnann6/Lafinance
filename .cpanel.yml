@@ -1,6 +1,8 @@
 deployment:
   tasks:
+    - export REPOPATH=/home/lafp5626/repositories/Lafinance
     - export APPPATH=/home/lafp5626/Lafinance
     - export PUBLICPATH=/home/lafp5626/public_html
-    - /bin/cp -a app/. $APPPATH/app/
-    - /bin/cp -a public/. $PUBLICPATH/
+
+    - /bin/cp -a $REPOPATH/app/. $APPPATH/app/
+    - /bin/cp -a $REPOPATH/public/. $PUBLICPATH/
