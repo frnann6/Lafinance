@@ -19,6 +19,9 @@ $photoPath = $photoPath ?? null;
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        rel="stylesheet">
 
     <style>
         :root {
@@ -102,8 +105,13 @@ $photoPath = $photoPath ?? null;
             font-size: 14px;
         }
 
+        .btn-hide {
+            border: none !important;
+            outline: none !important;
+        }
+
         .balance-value {
-            margin: 12px 0 0;
+            margin: 0 0 0;
             font-size: 30px;
             font-weight: 800;
         }
@@ -166,7 +174,7 @@ $photoPath = $photoPath ?? null;
                 </a>
 
                 <div class="welcome-text">
-                    <h1 class="welcome mb-1">
+                    <h1 class="welcome mb-0">
                         Halo, <?= esc($nama) ?>
                     </h1>
 
@@ -179,9 +187,16 @@ $photoPath = $photoPath ?? null;
 
         <section class="balance-card">
             <p class="balance-label mb-0">Total Saldo</p>
-            <p class="balance-value">
-                Rp<?= number_format($totalSaldo, 0, ',', '.') ?>
-            </p>
+            <div class="d-flex align-items-center">
+                <p class="balance-value mb-0" id="total-balance">
+                    Rp <?= number_format($totalSaldo, 0, ',', '.') ?>
+                </p>
+                <button type="button" class="btn btn-white btn-hide" id="balance-toggle"
+                    aria-label="Sembunyikan saldo" title="Sembunyikan saldo"
+                    aria-controls="total-balance" aria-pressed="false">
+                    <i class="bi bi-eye-slash text-white" aria-hidden="true"></i>
+                </button>
+            </div>
             <p class="balance-label mb-0">
                 Ringkasan saldo akan tersedia setelah transaksi dicatat.
             </p>
@@ -193,7 +208,7 @@ $photoPath = $photoPath ?? null;
                     <div class="text-success fs-4">↗</div>
                     <div class="summary-label">Pemasukan</div>
                     <div class="summary-value">
-                        Rp<?= number_format($totalPemasukan, 0, ',', '.') ?>
+                        Rp <?= number_format($totalPemasukan, 0, ',', '.') ?>
                     </div>
                 </div>
             </div>
@@ -203,7 +218,7 @@ $photoPath = $photoPath ?? null;
                     <div class="text-danger fs-4">↘</div>
                     <div class="summary-label">Pengeluaran</div>
                     <div class="summary-value">
-                        Rp<?= number_format($totalPengeluaran, 0, ',', '.') ?>
+                        Rp <?= number_format($totalPengeluaran, 0, ',', '.') ?>
                     </div>
                 </div>
             </div>
@@ -269,6 +284,24 @@ $photoPath = $photoPath ?? null;
     </main>
 
     <?= $this->include('partials/navbar', ['activeMenu' => 'home']) ?>
+
+    <script>
+        const balanceToggle = document.getElementById('balance-toggle');
+        const totalBalance = document.getElementById('total-balance');
+        const balanceIcon = balanceToggle.querySelector('i');
+        const visibleBalance = totalBalance.textContent.trim();
+
+        balanceToggle.addEventListener('click', () => {
+            const isHidden = balanceToggle.getAttribute('aria-pressed') === 'true';
+
+            totalBalance.textContent = isHidden ? visibleBalance : 'Rp •••••••';
+            balanceToggle.setAttribute('aria-pressed', String(!isHidden));
+            balanceToggle.setAttribute('aria-label', isHidden ? 'Sembunyikan saldo' : 'Tampilkan saldo');
+            balanceToggle.setAttribute('title', isHidden ? 'Sembunyikan saldo' : 'Tampilkan saldo');
+            balanceIcon.classList.toggle('bi-eye-slash', isHidden);
+            balanceIcon.classList.toggle('bi-eye', !isHidden);
+        });
+    </script>
 
 </body>
 
