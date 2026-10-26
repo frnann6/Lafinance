@@ -176,7 +176,7 @@ $balance = $totalIncome - $totalExpense;
                             value="<?= esc(old('username', $displayName), 'attr') ?>"
                             minlength="3"
                             maxlength="30"
-                            pattern="[A-Za-z0-9.]+"
+                            pattern="[A-Za-z0-9.]+(?: [A-Za-z0-9.]+)*"
                             autocomplete="username"
                             required>
                         <div class="form-text">3–30 karakter; hanya huruf, angka, dan titik.</div>
