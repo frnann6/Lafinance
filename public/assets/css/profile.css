@@ -185,6 +185,78 @@
             font-weight: 700;
         }
 
+        .financial-chart-grid {
+            display: grid;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .financial-chart-card {
+            min-width: 0;
+            padding-top: 14px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .financial-chart-title {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .financial-chart-canvas {
+            position: relative;
+            height: 190px;
+            margin-top: 10px;
+        }
+
+        .financial-chart-empty {
+            margin: 10px 0 0;
+            color: #6b7280;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .financial-chart-legend {
+            display: grid;
+            max-height: 120px;
+            gap: 7px;
+            overflow-y: auto;
+            margin: 12px 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .financial-chart-legend-item {
+            display: flex;
+            min-width: 0;
+            align-items: center;
+            gap: 7px;
+            font-size: 12px;
+        }
+
+        .financial-chart-swatch {
+            width: 9px;
+            height: 9px;
+            flex: 0 0 9px;
+            border-radius: 50%;
+            background: var(--swatch-color);
+        }
+
+        .financial-chart-label {
+            min-width: 0;
+            flex: 1;
+            overflow: hidden;
+            color: #4b5563;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .financial-chart-amount {
+            flex: 0 0 auto;
+            color: #1f2937;
+            font-weight: 650;
+        }
+
         .logout-button {
             min-height: 48px;
             margin-top: 20px;

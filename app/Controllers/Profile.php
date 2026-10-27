@@ -32,12 +32,21 @@ class Profile extends BaseController
             ->selectSum('amount')
             ->first();
 
+        $expenseByCategory = (clone $transactionModel)
+            ->select('category, SUM(amount) AS total', false)
+            ->where('user_id', $user->id)
+            ->where('type', 'expense')
+            ->groupBy('category')
+            ->orderBy('total', 'DESC')
+            ->findAll();
+
         return view('profile/index', [
             'username' => $user->username ?? 'Pengguna',
             'email' => $user->email ?? '',
             'photoPath' => $profile['photo_path'] ?? null,
             'totalIncome' => (float) ($income['amount'] ?? 0),
             'totalExpense' => (float) ($expense['amount'] ?? 0),
+            'expenseByCategory' => $expenseByCategory,
         ]);
     }
 

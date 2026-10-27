@@ -4,6 +4,7 @@ $initial = strtoupper(substr($displayName, 0, 1));
 $email = $email ?? '';
 $totalIncome = (float) ($totalIncome ?? 0);
 $totalExpense = (float) ($totalExpense ?? 0);
+$expenseByCategory = $expenseByCategory ?? [];
 $balance = $totalIncome - $totalExpense;
 ?>
 <!doctype html>
@@ -145,6 +146,28 @@ $balance = $totalIncome - $totalExpense;
                     <div class="summary-value text-danger">Rp<?= number_format($totalExpense, 0, ',', '.') ?></div>
                 </div>
             </div>
+
+            <div class="financial-chart-grid">
+                <article class="financial-chart-card">
+                    <h3 class="financial-chart-title">Arus kas</h3>
+                    <div class="financial-chart-canvas">
+                        <canvas id="cashflow-chart" role="img"
+                            aria-label="Diagram doughnut perbandingan pemasukan dan pengeluaran"></canvas>
+                    </div>
+                    <p class="financial-chart-empty" id="cashflow-chart-empty" hidden>Belum ada data arus kas.</p>
+                    <ul class="financial-chart-legend" id="cashflow-chart-legend" aria-label="Rincian arus kas"></ul>
+                </article>
+
+                <article class="financial-chart-card">
+                    <h3 class="financial-chart-title">Pengeluaran per kategori</h3>
+                    <div class="financial-chart-canvas">
+                        <canvas id="expense-chart" role="img"
+                            aria-label="Diagram pie pengeluaran berdasarkan kategori"></canvas>
+                    </div>
+                    <p class="financial-chart-empty" id="expense-chart-empty" hidden>Belum ada data pengeluaran.</p>
+                    <ul class="financial-chart-legend" id="expense-chart-legend" aria-label="Rincian pengeluaran per kategori"></ul>
+                </article>
+            </div>
         </section>
 
         <button type="button" class="btn btn-outline-danger w-100 py-2 logout-button"
@@ -243,6 +266,98 @@ $balance = $totalIncome - $totalExpense;
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script>
+        const chartCurrency = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            maximumFractionDigits: 0,
+        });
+        const chartPalette = ['#15803d', '#e11d48', '#2563eb', '#d97706', '#0891b2', '#7c3aed', '#65a30d', '#db2777'];
+
+        function renderFinancialChartLegend(elementId, labels, values, colors) {
+            const legend = document.getElementById(elementId);
+
+            labels.forEach((label, index) => {
+                const item = document.createElement('li');
+                item.className = 'financial-chart-legend-item';
+
+                const swatch = document.createElement('span');
+                swatch.className = 'financial-chart-swatch';
+                swatch.style.setProperty('--swatch-color', colors[index]);
+                swatch.setAttribute('aria-hidden', 'true');
+
+                const category = document.createElement('span');
+                category.className = 'financial-chart-label';
+                category.textContent = label;
+                category.title = label;
+
+                const amount = document.createElement('span');
+                amount.className = 'financial-chart-amount';
+                amount.textContent = chartCurrency.format(values[index]);
+
+                item.append(swatch, category, amount);
+                legend.appendChild(item);
+            });
+        }
+
+        function renderFinancialChart(canvasId, emptyId, labels, values, colors, type) {
+            const canvas = document.getElementById(canvasId);
+            const canvasContainer = canvas.parentElement;
+
+            if (!values.some((value) => value > 0)) {
+                canvasContainer.hidden = true;
+                document.getElementById(emptyId).hidden = false;
+                return;
+            }
+
+            new Chart(canvas, {
+                type,
+                data: {
+                    labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: colors,
+                        borderWidth: 0,
+                        hoverOffset: 4,
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    ...(type === 'doughnut' ? { cutout: '65%' } : {}),
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => `${context.label}: ${chartCurrency.format(context.parsed)}`,
+                            },
+                        },
+                    },
+                },
+            });
+
+            renderFinancialChartLegend(`${canvasId}-legend`, labels, values, colors);
+        }
+
+        const cashflowLabels = ['Pemasukan', 'Pengeluaran'];
+        const cashflowValues = [
+            <?= json_encode($totalIncome) ?>,
+            <?= json_encode($totalExpense) ?>,
+        ];
+        const expenseLabels = <?= json_encode(array_column($expenseByCategory, 'category'), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>;
+        const expenseValues = <?= json_encode(array_map(static fn ($row) => (float) $row['total'], $expenseByCategory)) ?>;
+
+        renderFinancialChart('cashflow-chart', 'cashflow-chart-empty', cashflowLabels, cashflowValues, chartPalette, 'doughnut');
+        renderFinancialChart(
+            'expense-chart',
+            'expense-chart-empty',
+            expenseLabels,
+            expenseValues,
+            expenseLabels.map((_, index) => chartPalette[index % chartPalette.length]),
+            'pie'
+        );
+    </script>
     <script>
         <?php if (session()->getFlashdata('showProfileModal')): ?>
             bootstrap.Modal.getOrCreateInstance(document.getElementById('editProfileModal')).show();
