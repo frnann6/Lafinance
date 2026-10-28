@@ -150,7 +150,7 @@ $balance = $totalIncome - $totalExpense;
             <div class="financial-chart-grid">
                 <article class="financial-chart-card">
                     <h3 class="financial-chart-title">Arus kas</h3>
-                    <div class="financial-chart-canvas">
+                    <div class="financial-chart-canvas my-4">
                         <canvas id="cashflow-chart" role="img"
                             aria-label="Diagram doughnut perbandingan pemasukan dan pengeluaran"></canvas>
                     </div>
@@ -160,7 +160,7 @@ $balance = $totalIncome - $totalExpense;
 
                 <article class="financial-chart-card">
                     <h3 class="financial-chart-title">Pengeluaran per kategori</h3>
-                    <div class="financial-chart-canvas">
+                    <div class="financial-chart-canvas my-4">
                         <canvas id="expense-chart" role="img"
                             aria-label="Diagram pie pengeluaran berdasarkan kategori"></canvas>
                     </div>
