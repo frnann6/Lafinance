@@ -16,21 +16,21 @@ $activeMenu = match ($currentSegment) {
         <a
             href="<?= site_url('dashboard/home') ?>"
             class="nav-item <?= ($activeMenu ?? '') === 'home' ? 'active' : '' ?>">
-            <span class="nav-icon">⌂</span>
+            <span class="nav-icon"><i class="bi bi-house-door" aria-hidden="true"></i></span>
             Beranda
         </a>
 
         <a
             href="<?= site_url('dashboard/transactions') ?>"
             class="nav-item <?= ($activeMenu ?? '') === 'transactions' ? 'active' : '' ?>">
-            <span class="nav-icon">⇄</span>
+            <span class="nav-icon"><i class="bi bi-arrow-left-right" aria-hidden="true"></i></span>
             Transaksi
         </a>
 
         <a
             href="<?= site_url('dashboard/profile') ?>"
             class="nav-item <?= ($activeMenu ?? '') === 'profile' ? 'active' : '' ?>">
-            <span class="nav-icon">♙</span>
+            <span class="nav-icon"><i class="bi bi-person" aria-hidden="true"></i></span>
             Profil
         </a>
     </div>
