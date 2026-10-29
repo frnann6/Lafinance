@@ -47,8 +47,9 @@
         >
     </div>
 
-    <button type="submit" class="btn btn-success w-100">
-        Kirim Tautan Login
+    <button type="submit" class="btn btn-success w-100 d-flex align-items-center justify-content-center gap-2" id="magic-link-submit">
+        <span class="spinner-border spinner-border-sm d-none" aria-hidden="true"></span>
+        <span>Kirim Tautan Login</span>
     </button>
 </form>
 
@@ -60,5 +61,15 @@
         Kembali ke halaman Masuk
     </a>
 </div>
+
+<script>
+    document.querySelector('form[action="<?= url_to('magic-link') ?>"]').addEventListener('submit', function() {
+        const submitButton = document.getElementById('magic-link-submit');
+        const spinner = submitButton.querySelector('.spinner-border');
+
+        submitButton.disabled = true;
+        spinner.classList.remove('d-none');
+    });
+</script>
 
 <?= $this->endSection() ?>
