@@ -27,9 +27,9 @@
         </a>
 
 
-        <p class="coming-soon">
+        <!-- <p class="coming-soon">
             Aplikasi sedang dalam tahap pengembangan.
-        </p>
+        </p> -->
     </section>
 
     <section class="feature-list">
