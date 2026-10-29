@@ -168,7 +168,7 @@ $balance = $totalIncome - $totalExpense;
                     <h3 class="financial-chart-title">Pengeluaran per kategori</h3>
                     <div class="financial-chart-canvas my-4">
                         <canvas id="expense-chart" role="img"
-                            aria-label="Diagram pie pengeluaran berdasarkan kategori"></canvas>
+                            aria-label="Diagram doughnut pengeluaran berdasarkan kategori"></canvas>
                     </div>
                     <p class="financial-chart-empty" id="expense-chart-empty" hidden>Belum ada data pengeluaran.</p>
                     <ul class="financial-chart-legend" id="expense-chart-legend" aria-label="Rincian pengeluaran per kategori"></ul>
@@ -361,7 +361,7 @@ $balance = $totalIncome - $totalExpense;
             expenseLabels,
             expenseValues,
             expenseLabels.map((_, index) => chartPalette[index % chartPalette.length]),
-            'pie'
+            'doughnut'
         );
     </script>
     <script>
