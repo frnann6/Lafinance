@@ -322,3 +322,9 @@
         #transactionModal .transaction-type-option:active {
             transform: scale(0.98);
         }
+
+        /* animate */
+
+        .animate__zoomIn {
+            --animate-duration: 0.4s;
+        }

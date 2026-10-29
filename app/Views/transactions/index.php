@@ -22,6 +22,9 @@ $photoPath = $photoPath ?? null;
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
     <link rel="stylesheet" href="<?= base_url('assets/css/transactions.css') ?>">
 </head>
 
@@ -126,7 +129,7 @@ $photoPath = $photoPath ?? null;
         <?php endif; ?>
 
         <!-- Modal Tambah Transaksi -->
-        <div class="modal fade" id="transactionModal"
+        <div class="modal animate__animated animate__zoomIn" id="transactionModal"
             tabindex="-1" aria-labelledby="transactionModalLabel"
             aria-hidden="true">
 
@@ -420,7 +423,7 @@ $photoPath = $photoPath ?? null;
         </div>
 
         <!-- Modal Detail Transaksi -->
-        <div class="modal fade" id="transactionDetailModal"
+        <div class="modal animate__animated animate__zoomIn" id="transactionDetailModal"
             tabindex="-1" aria-labelledby="transactionDetailModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
