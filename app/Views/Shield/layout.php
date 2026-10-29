@@ -35,7 +35,7 @@
         </section>
 
         <footer class="auth-footer">
-            Keuangan lebih teratur, hidup lebih tenang.
+            <span class="fw-semibold">Dibuat oleh Fernanda ganteng - <a href="https://instagram.com/frnann6" target="_blank" class="text-decoration-none text-success fw-semibold">@frnann6</a></span>
         </footer>
     </main>
 

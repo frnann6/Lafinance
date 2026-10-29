@@ -61,6 +61,8 @@
     </section>
 
     <footer class="home-footer">
-        Dibuat untuk kebiasaan keuangan yang lebih baik.
+        <!-- <span class="text-success">Untuk kebiasaan keuangan yang lebih baik.</span>
+        <br> -->
+        <span class="fw-semibold">Dibuat oleh Fernanda ganteng - <a href="https://instagram.com/frnann6" target="_blank" class="text-decoration-none text-success fw-semibold">@frnann6</a></span>
     </footer>
 </section>
