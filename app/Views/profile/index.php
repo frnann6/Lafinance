@@ -4,6 +4,7 @@ $initial = strtoupper(substr($displayName, 0, 1));
 $email = $email ?? '';
 $totalIncome = (float) ($totalIncome ?? 0);
 $totalExpense = (float) ($totalExpense ?? 0);
+$totalTransactions = (int) ($totalTransactions ?? 0);
 $expenseByCategory = $expenseByCategory ?? [];
 $balance = $totalIncome - $totalExpense;
 ?>
@@ -135,6 +136,11 @@ $balance = $totalIncome - $totalExpense;
             <h2 id="summary-title" class="h6 fw-bold mb-3">Ringkasan keuangan</h2>
             <p class="summary-label mb-0">Total saldo</p>
             <p class="balance-value">Rp<?= number_format($balance, 0, ',', '.') ?></p>
+
+            <div class="summary-item mb-3">
+                <div class="summary-label">Total transaksi</div>
+                <div class="summary-total"><?= number_format($totalTransactions, 0, ',', '.') ?></div>
+            </div>
 
             <div class="row g-3">
                 <div class="col-6 summary-item">

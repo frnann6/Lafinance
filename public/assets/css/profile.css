@@ -185,6 +185,12 @@
             font-weight: 700;
         }
 
+        .summary-total {
+             margin-top: 4px;
+             font-size: 20px;
+             font-weight: 700;
+        }
+
         .financial-chart-grid {
             display: grid;
             gap: 12px;

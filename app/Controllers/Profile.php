@@ -32,6 +32,10 @@ class Profile extends BaseController
             ->selectSum('amount')
             ->first();
 
+        $totalTransactions = (clone $transactionModel)
+            ->where('user_id', $user->id)
+            ->countAllResults();
+
         $expenseByCategory = (clone $transactionModel)
             ->select('category, SUM(amount) AS total', false)
             ->where('user_id', $user->id)
@@ -46,6 +50,7 @@ class Profile extends BaseController
             'photoPath' => $profile['photo_path'] ?? null,
             'totalIncome' => (float) ($income['amount'] ?? 0),
             'totalExpense' => (float) ($expense['amount'] ?? 0),
+            'totalTransactions' => $totalTransactions,
             'expenseByCategory' => $expenseByCategory,
         ]);
     }
