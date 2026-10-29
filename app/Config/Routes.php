@@ -5,7 +5,10 @@ use CodeIgniter\Router\RouteCollection;
 /** @var RouteCollection $routes */
 $routes->get('/', 'LafinanceHome::index');
 
-service('auth')->routes($routes);
+service('auth')->routes($routes, ['except' => ['register']]);
+
+$routes->get('register', 'Auth\RegisterController::registerView', ['as' => 'register']);
+$routes->post('register', 'Auth\RegisterController::registerAction');
 
 $routes->get('dashboard/home', 'Dashboard::index', ['filter' => 'session']);
 
