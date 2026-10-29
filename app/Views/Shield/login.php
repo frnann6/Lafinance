@@ -10,11 +10,12 @@
 </div>
 
 <?php if (session('error') !== null) : ?>
-    <div class="alert alert-danger rounded-3" role="alert">
+    <div class="alert alert-danger alert-dismissible rounded-3 toast-alert" role="alert">
         <?= esc(session('error')) ?>
+        <button type="button" class="btn-close" aria-label="Tutup notifikasi"></button>
     </div>
 <?php elseif (session('errors') !== null) : ?>
-    <div class="alert alert-danger rounded-3" role="alert">
+    <div class="alert alert-danger alert-dismissible rounded-3 toast-alert" role="alert">
         <?php if (is_array(session('errors'))) : ?>
             <?php foreach (session('errors') as $error) : ?>
                 <div><?= esc($error) ?></div>
@@ -22,12 +23,14 @@
         <?php else : ?>
             <?= esc(session('errors')) ?>
         <?php endif ?>
+        <button type="button" class="btn-close" aria-label="Tutup notifikasi"></button>
     </div>
 <?php endif ?>
 
 <?php if (session('message') !== null) : ?>
-    <div class="alert alert-success rounded-3" role="alert">
+    <div class="alert alert-success alert-dismissible rounded-3 toast-alert" role="alert">
         <?= esc(session('message')) ?>
+        <button type="button" class="btn-close" aria-label="Tutup notifikasi"></button>
     </div>
 <?php endif ?>
 
@@ -97,5 +100,15 @@
         </div>
     <?php endif ?>
 </form>
+
+<script>
+    document.addEventListener('click', function (event) {
+        const closeButton = event.target.closest('.toast-alert .btn-close');
+
+        if (closeButton) {
+            closeButton.closest('.toast-alert').remove();
+        }
+    });
+</script>
 
 <?= $this->endSection() ?>
