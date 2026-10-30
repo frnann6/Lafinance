@@ -34,3 +34,24 @@
             margin-bottom: 4px;
             font-size: 19px;
         }
+
+        html[data-bs-theme='dark'] .bottom-nav {
+            background: #1c241d;
+            border-top-color: #2f3b30;
+        }
+
+        html[data-bs-theme='dark'] .nav-item {
+            color: #9ca3af;
+        }
+
+        html[data-bs-theme='dark'] .nav-item.active {
+            color: #86efac;
+        }
+
+        html[data-bs-theme='dark'] {
+            color-scheme: dark;
+        }
+
+        html[data-bs-theme='dark'] .nav-item.active {
+            color: #86efac;
+        }

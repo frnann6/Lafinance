@@ -6,7 +6,7 @@ $photoPath = $photoPath ?? null;
 ?>
 
 <!doctype html>
-<html lang="id">
+<html lang="id" data-bs-theme="light">
 
 <head>
     <meta charset="utf-8">
@@ -15,6 +15,13 @@ $photoPath = $photoPath ?? null;
 
     <link rel="shortcut icon" href="<?= base_url('assets/img/logos/lafern-circle.png') ?>" type="image/x-icon">
     <title>Dashboard | Lafinance</title>
+
+    <script>
+        (function () {
+            var theme = localStorage.getItem('lafinance_theme');
+            document.documentElement.setAttribute('data-bs-theme', theme === 'dark' ? 'dark' : 'light');
+        })();
+    </script>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"

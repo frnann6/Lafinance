@@ -322,3 +322,136 @@
         #transactionModal .transaction-type-option:active {
             transform: scale(0.98);
         }
+
+        .theme-panel {
+            margin-top: 16px;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+        }
+
+        html[data-bs-theme='dark'] body {
+            background: #101512;
+            color: #e5e7eb;
+        }
+
+        html[data-bs-theme='dark'] .muted {
+            color: #9ca3af;
+        }
+
+        html[data-bs-theme='dark'] .transaction-card {
+            background: #1c241d;
+            border-color: #2f3b30;
+        }
+
+        html[data-bs-theme='dark'] #transactionModal .modal-content {
+            background: #1c241d;
+            color: #e5e7eb;
+        }
+
+        html[data-bs-theme='dark'] #transactionModal .form-label {
+            color: #d1d5db;
+        }
+
+        html[data-bs-theme='dark'] #transactionModal .form-control,
+        html[data-bs-theme='dark'] #transactionModal .form-select {
+            background-color: #141a16;
+            border-color: #37423a;
+            color: #e5e7eb;
+        }
+
+        html[data-bs-theme='dark'] #transactionModal .form-control:focus,
+        html[data-bs-theme='dark'] #transactionModal .form-select:focus {
+            background-color: #141a16;
+            border-color: #279764;
+        }
+
+        html[data-bs-theme='dark'] #transactionModal .btn-light {
+            border-color: #37423a;
+            background: transparent;
+            color: #e5e7eb;
+        }
+
+        html[data-bs-theme='dark'] #transactionModal .transaction-type-option {
+            background: #141a16;
+            border-color: #37423a;
+            color: #d1d5db;
+        }
+
+        html[data-bs-theme='dark'] #transactionModal .transaction-type-option .type-icon {
+            background: #223029;
+            color: #86efac;
+        }
+
+        html[data-bs-theme='dark'] #transactionModal .transaction-type-option.active[data-type='income'] {
+            color: #86efac;
+            background: #173526;
+            border-color: #279764;
+        }
+
+        html[data-bs-theme='dark'] #transactionModal .transaction-type-option.active[data-type='income'] .type-icon {
+            background: #1d4a33;
+        }
+
+        html[data-bs-theme='dark'] #transactionModal .transaction-type-option.active[data-type='expense'] {
+            color: #fca5a5;
+            background: #3a1d1d;
+            border-color: #dc5864;
+        }
+
+        html[data-bs-theme='dark'] #transactionModal .transaction-type-option.active[data-type='expense'] .type-icon {
+            background: #4a2424;
+        }
+
+        html[data-bs-theme='dark'] {
+            color-scheme: dark;
+        }
+
+        html[data-bs-theme='dark'] #transactionDetailModal .modal-content,
+        html[data-bs-theme='dark'] #transactionModal .modal-content {
+            background: #1c241d;
+            border-color: #2f3b30;
+            color: #e5e7eb;
+        }
+
+        html[data-bs-theme='dark'] .amount-prefix {
+            background: #223029 !important;
+            border-color: #37423a !important;
+            color: #a7f3d0 !important;
+        }
+
+        html[data-bs-theme='dark'] .detail-summary {
+            background: #223029 !important;
+            border: 1px solid #2f4a39;
+        }
+
+        html[data-bs-theme='dark'] .modal .btn-close {
+            filter: invert(1) grayscale(100%) brightness(1.7);
+        }
+
+        html[data-bs-theme='dark'] #transactionDetailModal .detail-row {
+            border-color: #2f3b30;
+        }
+
+        html[data-bs-theme='dark'] #transactionDetailModal .added-by,
+        html[data-bs-theme='dark'] #transactionDetailModal .text-secondary,
+        html[data-bs-theme='dark'] #transactionModal .text-secondary {
+            color: #a7b3aa !important;
+        }
+
+        html[data-bs-theme='dark'] #transactionModal .btn-light {
+            background: #141a16;
+            border-color: #37423a;
+            color: #e5e7eb;
+        }
+
+        html[data-bs-theme='dark'] .brand,
+        html[data-bs-theme='dark'] .income,
+        html[data-bs-theme='dark'] #detailAmount[style*='#15803d'] {
+            color: #86efac !important;
+        }
+
+        html[data-bs-theme='dark'] #detailAmount {
+            color: #86efac !important;
+        }

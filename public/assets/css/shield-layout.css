@@ -158,3 +158,63 @@
                 padding: 22px 18px;
             }
         }
+
+        .theme-panel {
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 24px;
+            box-shadow: 0 12px 35px rgba(20, 83, 45, 0.06);
+        }
+
+        html[data-bs-theme='dark'] body {
+            background: #101512;
+            color: #e5e7eb;
+        }
+
+        html[data-bs-theme='dark'] .auth-card,
+        html[data-bs-theme='dark'] .theme-panel {
+            background: #1c241d;
+            border-color: #2f3b30;
+        }
+
+        html[data-bs-theme='dark'] .auth-card {
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+        }
+
+        html[data-bs-theme='dark'] .brand-icon {
+            background: #173526;
+            color: #86efac;
+        }
+
+        html[data-bs-theme='dark'] .brand-name {
+            color: #86efac;
+        }
+
+        html[data-bs-theme='dark'] .brand-description,
+        html[data-bs-theme='dark'] .auth-card p,
+        html[data-bs-theme='dark'] .auth-footer {
+            color: #9ca3af;
+        }
+
+        html[data-bs-theme='dark'] .form-control {
+            background-color: #141a16;
+            border-color: #37423a;
+            color: #e5e7eb;
+        }
+
+        html[data-bs-theme='dark'] {
+            color-scheme: dark;
+        }
+
+        html[data-bs-theme='dark'] .form-control::placeholder,
+        html[data-bs-theme='dark'] .form-text,
+        html[data-bs-theme='dark'] .text-secondary {
+            color: #a7b3aa !important;
+        }
+
+        html[data-bs-theme='dark'] .btn-light {
+            background: #141a16;
+            border-color: #37423a;
+            color: #e5e7eb;
+        }

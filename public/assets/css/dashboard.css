@@ -122,3 +122,52 @@
             border: 1px solid #e5e7eb;
             border-radius: 20px;
         }
+
+        .theme-panel {
+            margin-top: 24px;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+        }
+
+        html[data-bs-theme='dark'] body {
+            background: #101512;
+            color: #e5e7eb;
+        }
+
+        html[data-bs-theme='dark'] .muted {
+            color: #9ca3af;
+        }
+
+        html[data-bs-theme='dark'] .theme-panel,
+        html[data-bs-theme='dark'] .summary-card,
+        html[data-bs-theme='dark'] .transaction-card {
+            background: #1c241d;
+            border-color: #2f3b30;
+        }
+
+        html[data-bs-theme='dark'] .summary-label {
+            color: #9ca3af;
+        }
+
+        html[data-bs-theme='dark'] {
+            color-scheme: dark;
+        }
+
+        html[data-bs-theme='dark'] .welcome-avatar {
+            background: #173526;
+            color: #86efac;
+        }
+
+        html[data-bs-theme='dark'] .summary-card,
+        html[data-bs-theme='dark'] .transaction-card,
+        html[data-bs-theme='dark'] .theme-panel {
+            background: #1c241d;
+            border-color: #2f3b30;
+        }
+
+        html[data-bs-theme='dark'] .brand,
+        html[data-bs-theme='dark'] .text-success {
+            color: #86efac !important;
+        }

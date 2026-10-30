@@ -5,7 +5,7 @@ $initial = strtoupper(substr($displayName, 0, 1));
 $photoPath = $photoPath ?? null;
 ?>
 <!doctype html>
-<html lang="id">
+<html lang="id" data-bs-theme="light">
 
 <head>
     <meta charset="utf-8">
@@ -14,6 +14,13 @@ $photoPath = $photoPath ?? null;
 
     <link rel="shortcut icon" href="<?= base_url('assets/img/logos/lafern-circle.png') ?>" type="image/x-icon">
     <title>Transaksi | Lafinance</title>
+
+    <script>
+        (function () {
+            var theme = localStorage.getItem('lafinance_theme');
+            document.documentElement.setAttribute('data-bs-theme', theme === 'dark' ? 'dark' : 'light');
+        })();
+    </script>
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -264,7 +271,7 @@ $photoPath = $photoPath ?? null;
                                 </label>
 
                                 <div class="input-group input-group-lg">
-                                    <span class="input-group-text bg-light fw-semibold" style="font-size: 15px;">Rp</span>
+                                    <span class="input-group-text amount-prefix fw-semibold" style="font-size: 15px;">Rp</span>
                                     <input type="text"
                                         id="amount_display"
                                         class="form-control rounded-end-3"
@@ -364,7 +371,7 @@ $photoPath = $photoPath ?? null;
                                 </label>
 
                                 <div class="input-group input-group-lg">
-                                    <span class="input-group-text bg-light fw-semibold" style="font-size: 15px;">
+                                    <span class="input-group-text amount-prefix fw-semibold" style="font-size: 15px;">
                                         Rp
                                     </span>
                                     <input
@@ -438,7 +445,7 @@ $photoPath = $photoPath ?? null;
                             data-bs-dismiss="modal" aria-label="Tutup"></button>
                     </div>
                     <div class="modal-body px-4 pt-3 pb-4">
-                        <div class="rounded-4 p-3 mb-3" style="background:#f5f8f5;">
+                        <div class="detail-summary rounded-4 p-3 mb-3">
                             <div class="small text-secondary mb-1" id="detailType"></div>
                             <div class="fs-4 fw-bold" id="detailAmount"></div>
                             <div class="fw-semibold mt-1" id="detailCategory"></div>

@@ -9,7 +9,7 @@ $expenseByCategory = $expenseByCategory ?? [];
 $balance = $totalIncome - $totalExpense;
 ?>
 <!doctype html>
-<html lang="id">
+<html lang="id" data-bs-theme="light">
 
 <head>
     <meta charset="utf-8">
@@ -17,6 +17,13 @@ $balance = $totalIncome - $totalExpense;
     <meta name="theme-color" content="#166534">
     <link rel="shortcut icon" href="<?= base_url('assets/img/logos/lafern-circle.png') ?>" type="image/x-icon">
     <title>Profil | Lafinance</title>
+
+    <script>
+        (function () {
+            var theme = localStorage.getItem('lafinance_theme');
+            document.documentElement.setAttribute('data-bs-theme', theme === 'dark' ? 'dark' : 'light');
+        })();
+    </script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -130,6 +137,19 @@ $balance = $totalIncome - $totalExpense;
                 <div id="photo-upload-error" class="small text-danger mt-2" role="alert" aria-live="polite"></div>
                 <p class="small text-secondary mt-2 mb-0">JPG, PNG, atau WebP. Maksimal 2 MB.</p>
             </form>
+        </section>
+
+        <section class="theme-panel" aria-label="Pengatur tema">
+            <div class="d-flex align-items-center justify-content-between gap-3">
+                <div>
+                    <h2 class="h6 fw-bold mb-1">Tema</h2>
+                    <p class="muted mb-0">Beralih antara tampilan terang dan gelap.</p>
+                </div>
+                <button type="button" class="btn btn-success" id="theme-toggle" aria-pressed="false" aria-label="Buka mode gelap">
+                    <i class="bi bi-moon-stars" aria-hidden="true"></i>
+                    <span id="theme-toggle-label">Dark</span>
+                </button>
+            </div>
         </section>
 
         <section class="summary-panel" aria-labelledby="summary-title">
@@ -310,6 +330,7 @@ $balance = $totalIncome - $totalExpense;
         function renderFinancialChart(canvasId, emptyId, labels, values, colors, type) {
             const canvas = document.getElementById(canvasId);
             const canvasContainer = canvas.parentElement;
+            const isDarkTheme = document.documentElement.getAttribute('data-bs-theme') === 'dark';
 
             if (!values.some((value) => value > 0)) {
                 canvasContainer.hidden = true;
@@ -324,7 +345,8 @@ $balance = $totalIncome - $totalExpense;
                     datasets: [{
                         data: values,
                         backgroundColor: colors,
-                        borderWidth: 0,
+                        borderColor: isDarkTheme ? '#1c241d' : '#111827',
+                        borderWidth: isDarkTheme ? 0 : 1,
                         hoverOffset: 4,
                     }],
                 },
@@ -363,6 +385,31 @@ $balance = $totalIncome - $totalExpense;
             expenseLabels.map((_, index) => chartPalette[index % chartPalette.length]),
             'doughnut'
         );
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const themeToggleButton = document.getElementById('theme-toggle');
+            const themeToggleLabel = document.getElementById('theme-toggle-label');
+            const themeIcon = themeToggleButton.querySelector('i');
+            let currentTheme = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'dark' : 'light';
+
+            themeToggleButton.setAttribute('aria-pressed', currentTheme === 'dark');
+            themeToggleButton.setAttribute('aria-label', currentTheme === 'dark' ? 'Buka mode terang' : 'Buka mode gelap');
+            themeToggleLabel.textContent = currentTheme === 'dark' ? 'Light' : 'Dark';
+            themeIcon.className = currentTheme === 'dark' ? 'bi bi-sun' : 'bi bi-moon-stars';
+
+            themeToggleButton.addEventListener('click', function () {
+                const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+                document.documentElement.setAttribute('data-bs-theme', nextTheme);
+                localStorage.setItem('lafinance_theme', nextTheme);
+                currentTheme = nextTheme;
+                themeToggleButton.setAttribute('aria-pressed', nextTheme === 'dark');
+                themeToggleButton.setAttribute('aria-label', nextTheme === 'dark' ? 'Buka mode terang' : 'Buka mode gelap');
+                themeToggleLabel.textContent = nextTheme === 'dark' ? 'Light' : 'Dark';
+                themeIcon.className = nextTheme === 'dark' ? 'bi bi-sun' : 'bi bi-moon-stars';
+            });
+        });
     </script>
     <script>
         <?php if (session()->getFlashdata('showProfileModal')): ?>

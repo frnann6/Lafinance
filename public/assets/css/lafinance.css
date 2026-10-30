@@ -201,3 +201,30 @@ body {
         overflow: hidden;
     }
 }
+
+.theme-panel {
+    margin-top: 20px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+}
+
+html[data-bs-theme='dark'] body {
+    background: #101512;
+    color: #e5e7eb;
+}
+
+html[data-bs-theme='dark'] .app-shell {
+    background: #141a16;
+    box-shadow: 0 0 40px rgb(0 0 0 / 30%);
+}
+
+html[data-bs-theme='dark'] .welcome-card {
+    background: #14532d;
+}
+
+html[data-bs-theme='dark'] .btn-duitku {
+    background: #14532d;
+    color: #bbf7d0;
+}

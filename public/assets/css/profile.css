@@ -61,12 +61,29 @@
         }
 
         .profile-panel,
-        .summary-panel {
+        .summary-panel,
+        .theme-panel {
             margin-top: 20px;
             padding: 20px;
             background: #fff;
             border: 1px solid #e5e7eb;
             border-radius: 18px;
+        }
+
+        html[data-bs-theme='dark'] body {
+            background: #101512;
+            color: #e5e7eb;
+        }
+
+        html[data-bs-theme='dark'] .muted {
+            color: #9ca3af;
+        }
+
+        html[data-bs-theme='dark'] .profile-panel,
+        html[data-bs-theme='dark'] .summary-panel,
+        html[data-bs-theme='dark'] .theme-panel {
+            background: #1c241d;
+            border-color: #2f3b30;
         }
 
         .profile-avatar {
@@ -276,4 +293,69 @@
             box-shadow: none !important;
             background: transparent !important;
             padding-bottom: 10px;
+        }
+
+        html[data-bs-theme='dark'] {
+            color-scheme: dark;
+        }
+
+        html[data-bs-theme='dark'] body {
+            background: #101512;
+            color: #e5e7eb;
+        }
+
+        html[data-bs-theme='dark'] .profile-panel,
+        html[data-bs-theme='dark'] .summary-panel,
+        html[data-bs-theme='dark'] .theme-panel,
+        html[data-bs-theme='dark'] .modal-content {
+            background: #1c241d;
+            border-color: #2f3b30;
+            color: #e5e7eb;
+        }
+
+        html[data-bs-theme='dark'] .photo-picker,
+        html[data-bs-theme='dark'] .photo-delete-button,
+        html[data-bs-theme='dark'] .crop-tools .btn-light,
+        html[data-bs-theme='dark'] .btn-light {
+            background: #141a16;
+            border-color: #37423a;
+            color: #e5e7eb;
+        }
+
+        html[data-bs-theme='dark'] .photo-picker:hover,
+        html[data-bs-theme='dark'] .photo-delete-button:hover,
+        html[data-bs-theme='dark'] .crop-tools .btn-light:hover,
+        html[data-bs-theme='dark'] .btn-light:hover {
+            background: #223029;
+        }
+
+        html[data-bs-theme='dark'] .form-control {
+            background-color: #141a16;
+            border-color: #37423a;
+            color: #e5e7eb;
+        }
+
+        html[data-bs-theme='dark'] .form-control::placeholder,
+        html[data-bs-theme='dark'] .form-text,
+        html[data-bs-theme='dark'] .text-secondary,
+        html[data-bs-theme='dark'] .muted,
+        html[data-bs-theme='dark'] .financial-chart-label {
+            color: #a7b3aa !important;
+        }
+
+        html[data-bs-theme='dark'] .summary-item,
+        html[data-bs-theme='dark'] .financial-chart-card {
+            border-color: #2f3b30;
+        }
+
+        html[data-bs-theme='dark'] .financial-chart-amount {
+            color: #e5e7eb;
+        }
+
+        html[data-bs-theme='dark'] .brand,
+        html[data-bs-theme='dark'] .balance-value,
+        html[data-bs-theme='dark'] .photo-picker,
+        html[data-bs-theme='dark'] .btn-edit-usern,
+        html[data-bs-theme='dark'] .text-success {
+            color: #86efac !important;
         }
